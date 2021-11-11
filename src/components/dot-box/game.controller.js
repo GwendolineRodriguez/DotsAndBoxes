@@ -67,6 +67,10 @@ class GameController {
     this.player1.color = classes.player1Color;
     this.player2.color = classes.player2Color;
   };
+
+  resetGame = () => {
+    console.error("ResetGame not implemented yet");
+  };
 }
 
 export default GameController;

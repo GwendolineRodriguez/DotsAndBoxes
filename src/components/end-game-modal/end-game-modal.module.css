@@ -42,6 +42,7 @@
 }
 
 .modalBtn {
+  cursor: pointer;
   width: 4em;
   height: 4em;
   background-color: var(--accent-color);

@@ -8,6 +8,8 @@ import {
   playerScores,
   endGameModalTitle,
 } from "./end-game-modal.module.css";
+import replayIcon from "./../../icons/replay_black_24dp.svg";
+import homeIcon from "./../../icons/home_black_24dp.svg";
 
 class EndGameModal extends HTMLElement {
   constructor() {
@@ -50,14 +52,10 @@ class EndGameModal extends HTMLElement {
         </div>
         <div id="${actionBtns}">
           <button id="replayBtn" class="${modalBtn}">
-            <img
-              class="icon"
-              src="icons/replay_black_24dp.svg"
-              alt="replayIcon"
-            />
+            <img class="icon" src="${replayIcon}" alt="replayIcon" />
           </button>
           <button id="homeBtn" class="${modalBtn}">
-            <img class="icon" src="icons/home_black_24dp.svg" alt="homeIcon" />
+            <img class="icon" src="${homeIcon}" alt="homeIcon" />
           </button>
         </div>
       </div>
@@ -69,6 +67,7 @@ class EndGameModal extends HTMLElement {
     const html = String.raw;
     const player1 = state.player1;
     const player2 = state.player2;
+    this.setBtnEventListeners(state);
     this.modalTitle.innerHTML = `${state.getWinner()} wins ! 🥳🔥`;
     this.playerScore1.innerHTML = html` ${player1.name}<br />${player1.score} `;
     this.playerScore2.innerHTML = html` ${player2.name}<br />${player2.score} `;
@@ -77,6 +76,7 @@ class EndGameModal extends HTMLElement {
     this.overlay.classList.remove(`${hidden}`);
     this.overlay.removeAttribute("aria-hidden");
     this.homeBtn.focus();
+    // Record Scores
   };
 
   close = () => {
@@ -84,6 +84,19 @@ class EndGameModal extends HTMLElement {
     this.overlay.classList.add(`${hidden}`);
     this.modal.setAttribute("aria-hidden", "true");
     this.overlay.setAttribute("aria-hidden", "true");
+  };
+
+  setBtnEventListeners = (state) => {
+    this.homeBtn.addEventListener("click", this.goHome);
+    this.replayBtn.addEventListener("click", (e) => {
+      state.resetGame();
+      this.close();
+    });
+  };
+
+  goHome = () => {
+    console.error("Going home is not implemented yet !");
+    this.close();
   };
 }
 
