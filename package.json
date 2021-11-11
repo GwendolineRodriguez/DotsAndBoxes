@@ -1,0 +1,15 @@
+{
+  "name": "dots-boxes",
+  "source": "src/index.html",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "devDependencies": {
+    "parcel": "^2.0.0"
+  },
+  "dependencies": {
+    "@galpop/themetoggler": "^1.1.3"
+  }
+}

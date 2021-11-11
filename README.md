@@ -1,2 +1,5 @@
-# DotsAndBoxes
-A Dots &amp; Boxes game written in vanilla javascript, as a PWA, accessible, use Service Worker for score, use heuristic algorithm for AI and setup CSP for security.
+# Dots Boxes
+
+A dots and boxes game with Accessibility and Performance optimisations.
+
+<https://dots-boxes.netlify.app/>

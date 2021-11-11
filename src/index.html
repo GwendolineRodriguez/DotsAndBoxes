@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#202731" />
+    <title>Dots and Boxes</title>
+    <link rel="icon" type="image/svg+xml" href="icons/icosahedron.svg">
+    <link rel="stylesheet" href="./styles/light.css" media="(prefers-color-scheme: light)" />
+    <link rel="stylesheet" href="./styles/dark.css" media="(prefers-color-scheme: dark)" />
+    <link rel="stylesheet" href="style.css" />
+    <script defer type="module" src="app.module.js"></script>
+    <script type="module" src="components/dot-box/dot-box-grid.js"></script>
+    <script type="module" src="components/end-game-modal/end-game-modal.js"></script>
+    <script type="module"
+            src="../node_modules/@galpop/themetoggler/src/themeToggler.module.js"></script>
+  </head>
+
+  <body>
+    <menu>
+      <theme-toggler lightFocusColor="#5859ff" darkFocusColor="#d5a403">
+      </theme-toggler>
+    </menu>
+    <dot-boxes-grid boxNumber="9"></dot-boxes-grid>
+    <end-game-modal></end-game-modal>
+    <div class="waves">
+      <div class="layer2">
+      </div>
+      <div class="layer1">
+      </div>
+    </div>
+  </body>
+
+</html>
