@@ -29,8 +29,6 @@ class GameController {
         box.owner = player.name;
         this.game.markBoxAsOwned(box, player, `${this.selectable}`);
         if (this.boxesOwned === this.maxScore) {
-          console.log("Game Over !! 🔥🔥");
-          console.log(`${this.getWinner()} wins !!!`);
           this.gameOver = true;
           this.endGameModal.open(this);
         }
@@ -69,6 +67,7 @@ class GameController {
   };
 
   resetGame = () => {
+    // could just refreshpage with options in route ?
     console.error("ResetGame not implemented yet");
   };
 }
