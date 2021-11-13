@@ -1,4 +1,4 @@
-import { Router } from "./core/router/router.module.js";
+import { Router } from "./router/router.module.js";
 
 class App {
   constructor() {
@@ -7,12 +7,14 @@ class App {
     router.setRoutes([
       {
         path: "/",
-        component: dashboard.component,
-        afterRender: dashboard.addEventListeners,
+        component: "<title-options></title-options>",
       },
-      { path: "/game", component: game.component },
+      {
+        path: "/game",
+        component: "<dot-boxes-grid boxNumber='9'></dot-boxes-grid>",
+      },
+      { path: "/scores", component: "<scores></scores>" },
     ]);
-    document.querySelector("nav").innerHTML = navbar.component;
     router.updateLinks();
   }
 }
