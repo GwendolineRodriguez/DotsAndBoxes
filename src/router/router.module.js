@@ -22,7 +22,9 @@ class Router {
     const route = this.routes.find((route) => route.path == path);
     this.outlet.innerHTML = route.component;
     history.replaceState({}, "", route.path);
-    this.updateLinks();
+    setTimeout(() => {
+      this.updateLinks();
+    }, 1000);
     if (!route.afterRender) return;
     route.afterRender();
   }
