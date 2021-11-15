@@ -51,12 +51,12 @@ class EndGameModal extends HTMLElement {
           <p id="playerScore2"></p>
         </div>
         <div id="${actionBtns}">
-          <button id="replayBtn" class="${modalBtn}">
+          <a id="replayBtn" class="${modalBtn}" href="/game">
             <img class="icon" src="${replayIcon}" alt="replayIcon" />
-          </button>
-          <button id="homeBtn" class="${modalBtn}">
+          </a>
+          <a id="homeBtn" class="${modalBtn}" href="/">
             <img class="icon" src="${homeIcon}" alt="homeIcon" />
-          </button>
+          </a>
         </div>
       </div>
       <div class="${overlay} ${hidden}" aria-hidden="true"></div>

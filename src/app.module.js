@@ -13,9 +13,8 @@ class App {
         path: "/game",
         component: "<dot-boxes-grid boxNumber='9'></dot-boxes-grid>",
       },
-      { path: "/scores", component: "<scores></scores>" },
+      { path: "/scores", component: "<game-scores></game-scores>" },
     ]);
-    router.updateLinks();
   }
 }
 
