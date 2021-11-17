@@ -1,18 +1,17 @@
 import {
-  titleOptions,
-  optTitle,
+  options,
   actionBtn,
   elemWidth,
   inputField,
   optLabel,
   modularBtn,
   selectInput,
-} from "./title-options.module.css";
+} from "./options.module.css";
 
 import arrowBackIcon from "./../../icons/arrow_back_24dp.svg";
 import arrowForwardIcon from "./../../icons/arrow_forward_24dp.svg";
 
-class TitleOptions extends HTMLElement {
+class Options extends HTMLElement {
   constructor() {
     super();
   }
@@ -26,7 +25,7 @@ class TitleOptions extends HTMLElement {
   render = () => {
     const html = String.raw;
     this.innerHTML = html`
-      <section id="${titleOptions}">
+      <section id="${options}">
         <!-- Name -->
         <label for="name" class="${optLabel}">Name</label>
         <input
@@ -82,4 +81,4 @@ class TitleOptions extends HTMLElement {
   };
 }
 
-customElements.define("title-options", TitleOptions);
+customElements.define("game-options", Options);

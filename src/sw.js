@@ -27,8 +27,8 @@ const urlsToCache = [
   "components/scores/scores.module.css",
   "components/themetoggler/themeToggler.js",
   "components/themetoggler/themeToggler.module.css",
-  "components/title-options/title-options.js",
-  "components/title-options/title-options.module.css",
+  "components/options/options.js",
+  "components/options/options.module.css",
 ];
 
 self.addEventListener("install", (event) => {

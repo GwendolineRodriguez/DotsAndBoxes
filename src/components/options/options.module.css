@@ -1,13 +1,8 @@
-#titleOptions {
+#options {
   color: var(--text-color);
   display: grid;
   justify-items: center;
   margin: 2em 15em;
-}
-
-.optTitle {
-  font-size: 5em;
-  margin-bottom: 0.3em;
 }
 
 .elemWidth {

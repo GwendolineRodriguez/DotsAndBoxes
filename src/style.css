@@ -33,6 +33,7 @@ menu {
   display: grid;
   width: 100%;
   justify-items: center;
+  align-items: center;
   top: 5em;
   position: fixed;
   grid-template-columns: 1fr 1fr 1fr;

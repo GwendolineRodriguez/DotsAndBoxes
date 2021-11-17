@@ -7,7 +7,7 @@ class App {
     router.setRoutes([
       {
         path: "/",
-        component: "<title-options></title-options>",
+        component: "<game-options></game-options>",
       },
       {
         path: "/game",
