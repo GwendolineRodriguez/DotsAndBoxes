@@ -15,6 +15,26 @@ class App {
       },
       { path: "/scores", component: "<game-scores></game-scores>" },
     ]);
+    this.registerServiceWorker();
+  }
+
+  registerServiceWorker() {
+    const sw = new URL("./sw.js", import.meta.url);
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(sw).then(
+          function (registration) {
+            console.log(
+              "ServiceWorker registration successful with scope: ",
+              registration.scope
+            );
+          },
+          function (err) {
+            console.log("ServiceWorker registration failed: ", err);
+          }
+        );
+      });
+    }
   }
 }
 

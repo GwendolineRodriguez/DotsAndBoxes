@@ -1,9 +1,12 @@
 import Player from "./player";
 import DotBoxGame from "./dot-box-game";
+import Score from "../scores/score";
 
 class GameController {
   constructor(boxNumber) {
-    this.maxScore = boxNumber;
+    // this.maxScore = boxNumber;
+    this.boxNumber = boxNumber;
+    this.maxScore = 1;
     this.player1 = new Player("Player 1", true);
     this.player2 = new Player("Player 2", false);
     this.boxesOwned = 0;
@@ -13,7 +16,6 @@ class GameController {
   }
 
   playTurn = (sideId, player) => {
-    this.endGameModal.open(this);
     const btn = document.getElementById(sideId);
     this.game.markBtnAsOwned(btn, player);
     const boxes = this.boxes.filter((box) =>
@@ -30,17 +32,18 @@ class GameController {
         this.game.markBoxAsOwned(box, player, `${this.selectable}`);
         if (this.boxesOwned === this.maxScore) {
           this.gameOver = true;
+          this.registerScore();
           this.endGameModal.open(this);
         }
       }
     });
     // Simulate other player, computer with a random ID
-    // if (player.isHuman && !boxCompleted) {
-    //   this.playTurn(this.game.getRandomSideId(), this.player2);
-    // }
-    // if (!player.isHuman && boxCompleted && !this.gameOver) {
-    //   this.playTurn(this.game.getRandomSideId(), this.player2);
-    // }
+    if (player.isHuman && !boxCompleted) {
+      this.playTurn(this.game.getRandomSideId(), this.player2);
+    }
+    if (!player.isHuman && boxCompleted && !this.gameOver) {
+      this.playTurn(this.game.getRandomSideId(), this.player2);
+    }
   };
 
   setUpEventListeners = () => {
@@ -70,6 +73,14 @@ class GameController {
     // could just refreshpage with options in route ?
     console.error("ResetGame not implemented yet");
   };
+
+  registerScore() {
+    const score = new Score(this.player1, this.player2, this.boxNumber);
+    const existingScores = localStorage.getItem("scores");
+    const newScores = JSON.parse(existingScores) || [];
+    newScores.push(score);
+    localStorage.setItem("scores", JSON.stringify(newScores));
+  }
 }
 
 export default GameController;

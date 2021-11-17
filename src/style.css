@@ -17,7 +17,7 @@ body {
   font-weight: 400;
   font-size: 16px;
   min-width: 100%;
-  max-height: 100vh;
+  height: 100vh;
   overflow: hidden;
 }
 
@@ -26,13 +26,22 @@ body {
   background-color: var(--background-color);
   padding: 2em 1em;
   align-content: center;
-  justify-content: space-around;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
+  justify-items: center;
 }
 
 menu {
-  display: flex;
-  justify-content: flex-end;
+  display: grid;
+  width: 100%;
+  justify-items: center;
+  top: 5em;
+  position: fixed;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+menu a {
+  text-decoration: none;
+  color: var(--text-color);
+  grid-column-start: 2;
 }
 
 .waves {

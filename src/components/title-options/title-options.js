@@ -8,6 +8,7 @@ import {
   modularBtn,
   selectInput,
 } from "./title-options.module.css";
+
 import arrowBackIcon from "./../../icons/arrow_back_24dp.svg";
 import arrowForwardIcon from "./../../icons/arrow_forward_24dp.svg";
 
@@ -26,7 +27,6 @@ class TitleOptions extends HTMLElement {
     const html = String.raw;
     this.innerHTML = html`
       <section id="${titleOptions}">
-        <h1 class="${optTitle}">Dots & Boxes</h1>
         <!-- Name -->
         <label for="name" class="${optLabel}">Name</label>
         <input
@@ -72,10 +72,11 @@ class TitleOptions extends HTMLElement {
             />
           </button>
         </span>
+
+        <a id="playBtn" class="${actionBtn} ${elemWidth}" href="/game">Play</a>
         <a id="scoreBtn" class="${actionBtn} ${elemWidth}" href="/scores"
           >Scores</a
         >
-        <a id="playBtn" class="${actionBtn} ${elemWidth}" href="/game">Play</a>
       </section>
     `;
   };

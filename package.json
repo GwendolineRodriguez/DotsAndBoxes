@@ -3,10 +3,12 @@
   "source": "src/index.html",
   "license": "MIT",
   "scripts": {
-    "start": "parcel",
+    "start": "rm -rf dist .parcel-cache && parcel --no-cache",
     "build": "parcel build"
   },
   "devDependencies": {
+    "@parcel/packager-raw-url": "^2.0.1",
+    "@parcel/transformer-webmanifest": "^2.0.0",
     "parcel": "^2.0.0"
   },
   "dependencies": {

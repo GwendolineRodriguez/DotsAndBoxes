@@ -87,16 +87,11 @@ class EndGameModal extends HTMLElement {
   };
 
   setBtnEventListeners = (state) => {
-    this.homeBtn.addEventListener("click", this.goHome);
+    this.homeBtn.addEventListener("click", this.close);
     this.replayBtn.addEventListener("click", (e) => {
       state.resetGame();
       this.close();
     });
-  };
-
-  goHome = () => {
-    console.error("Going home is not implemented yet !");
-    this.close();
   };
 }
 
