@@ -3,20 +3,22 @@ import DotBoxGame from "./dot-box-game";
 import Score from "../scores/score";
 
 class GameController {
-  constructor(boxNumber) {
-    // this.maxScore = boxNumber;
-    this.boxNumber = boxNumber;
+  constructor(options) {
+    this.boxNumber = options.board;
+    this.maxScore = this.boxNumber;
     this.maxScore = 1;
-    this.player1 = new Player("Player 1", true);
+    this.player1 = new Player(options.playerName, true);
     this.player2 = new Player("Player 2", false);
     this.boxesOwned = 0;
     this.game = new DotBoxGame();
-    this.boxes = this.game.generateBoxes(boxNumber);
+    this.boxes = this.game.generateBoxes(this.boxNumber);
     this.endGameModal = document.querySelector("end-game-modal");
   }
 
   playTurn = (sideId, player) => {
     const btn = document.getElementById(sideId);
+    console.log(sideId);
+    console.log(btn);
     this.game.markBtnAsOwned(btn, player);
     const boxes = this.boxes.filter((box) =>
       Object.keys(box.sideIds).includes(sideId)
