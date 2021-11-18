@@ -2,6 +2,8 @@ import { Router } from "./router/router.module.js";
 
 class App {
   constructor() {
+    // TODO: construct dotboxgame and options here to pass data from options to dotboxgrid
+    // step2: create function here to set options to pass to dotbox and create new dotbox Object here, then navigate from here, remove <a> link from options play button
     const routerOutlet = document.querySelector("main");
     const router = new Router(routerOutlet);
     router.setRoutes([
