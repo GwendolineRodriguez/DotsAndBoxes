@@ -24,7 +24,11 @@ class DotBoxesGrid extends HTMLElement {
   }
 
   connectedCallback() {
-    this.options = this.getAttribute("options");
+    const playerName = localStorage.getItem("playerName");
+    const board = localStorage.getItem("board");
+    const difficulty = localStorage.getItem("difficulty");
+    this.options = { playerName, board, difficulty };
+    // console.log(this.options);
     this.boxNumber = Number(this.options.board);
     this.state = new GameController(this.options);
     this.state.setUpClasses(this.classes);

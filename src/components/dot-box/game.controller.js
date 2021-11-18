@@ -17,8 +17,6 @@ class GameController {
 
   playTurn = (sideId, player) => {
     const btn = document.getElementById(sideId);
-    console.log(sideId);
-    console.log(btn);
     this.game.markBtnAsOwned(btn, player);
     const boxes = this.boxes.filter((box) =>
       Object.keys(box.sideIds).includes(sideId)

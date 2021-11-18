@@ -2,19 +2,21 @@ import { Router } from "./router/router.module.js";
 
 class App {
   constructor() {
-    // TODO: construct dotboxgame and options here to pass data from options to dotboxgrid
-    // step2: create function here to set options to pass to dotbox and create new dotbox Object here, then navigate from here, remove <a> link from options play button
     const routerOutlet = document.querySelector("main");
     const router = new Router(routerOutlet);
-    this.options = { playerName: "Player 1 👑", board: 9, difficulty: "easy" };
+    if (!localStorage.getItem("playerName")) {
+      localStorage.setItem("playerName", "Player 1 👑");
+      localStorage.setItem("board", "9");
+      localStorage.setItem("difficulty", "easy");
+    }
     router.setRoutes([
       {
         path: "/",
-        component: `<game-options options="${this.options}"></game-options>`,
+        component: "<game-options></game-options>",
       },
       {
         path: "/game",
-        component: `<dot-boxes-grid options="${this.options}"></dot-boxes-grid>`,
+        component: "<dot-boxes-grid></dot-boxes-grid>",
       },
       { path: "/scores", component: "<game-scores></game-scores>" },
     ]);

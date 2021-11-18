@@ -16,10 +16,30 @@ class Options extends HTMLElement {
     super();
   }
   connectedCallback() {
+    const playerName = localStorage.getItem("playerName");
+    const board = localStorage.getItem("board");
+    const difficulty = localStorage.getItem("difficulty");
+    this.options = { playerName, board, difficulty };
     this.render();
+    this.setEventListeners();
   }
   setEventListeners() {
     this.playBtn = document.getElementById("playBtn");
+    const gameLink = this.playBtn.children[0];
+    this.playBtn.addEventListener("click", () => {
+      const name = document.getElementById("name").value;
+      if (name && name != "") {
+        localStorage.setItem("playerName", name);
+      }
+      localStorage.setItem("board", document.getElementById("board").value);
+      localStorage.setItem(
+        "difficulty",
+        document.getElementById("difficulty").value
+      );
+      // dispatch event to anchor /game so that
+      // router gets triggered after getting options
+      gameLink.dispatchEvent(new Event("click"));
+    });
   }
 
   render = () => {
@@ -36,6 +56,7 @@ class Options extends HTMLElement {
           maxlength="8"
           size="10"
           placeholder="Player 1"
+          value="${this.options.playerName}"
         />
         <!-- Board -->
         <label for="board" class="${optLabel}">Board</label>
@@ -43,7 +64,11 @@ class Options extends HTMLElement {
           <button class="${modularBtn}" data-target="board">
             <img class="icon" src="${arrowBackIcon}" alt="arrowBackIcon" />
           </button>
-          <input id="board" value="3 x 3" class="${inputField} ${elemWidth}" />
+          <input
+            id="board"
+            value="${this.options.board}"
+            class="${inputField} ${elemWidth}"
+          />
           <button class="${modularBtn}" data-target="board">
             <img
               class="icon"
@@ -60,7 +85,7 @@ class Options extends HTMLElement {
           </button>
           <input
             id="difficulty"
-            value="easy"
+            value="${this.options.difficulty}"
             class="${inputField} ${elemWidth}"
           />
           <button class="${modularBtn}" data-target="difficulty">
@@ -71,8 +96,10 @@ class Options extends HTMLElement {
             />
           </button>
         </span>
-
-        <a id="playBtn" class="${actionBtn} ${elemWidth}" href="/game">Play</a>
+        <button id="playBtn" class="${actionBtn} ${elemWidth}">
+          Play
+          <a href="/game"></a>
+        </button>
         <a id="scoreBtn" class="${actionBtn} ${elemWidth}" href="/scores"
           >Scores</a
         >
