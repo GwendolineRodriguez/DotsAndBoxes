@@ -24,8 +24,9 @@ class DotBoxesGrid extends HTMLElement {
   }
 
   connectedCallback() {
-    this.boxNumber = Number(this.getAttribute("boxNumber"));
-    this.state = new GameController(this.boxNumber);
+    this.options = this.getAttribute("options");
+    this.boxNumber = Number(this.options.board);
+    this.state = new GameController(this.options);
     this.state.setUpClasses(this.classes);
     this.render();
     this.state.setUpEventListeners();
