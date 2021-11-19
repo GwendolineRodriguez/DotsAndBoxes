@@ -27,9 +27,11 @@ class DotBoxesGrid extends HTMLElement {
     const playerName = localStorage.getItem("playerName");
     const board = localStorage.getItem("board");
     const difficulty = localStorage.getItem("difficulty");
+    // this.boxNumber = Number(this.options.board);
+    this.boxNumber = 9;
+
     this.options = { playerName, board, difficulty };
-    // console.log(this.options);
-    this.boxNumber = Number(this.options.board);
+    console.log(this.options);
     this.state = new GameController(this.options);
     this.state.setUpClasses(this.classes);
     this.render();
@@ -60,6 +62,14 @@ class DotBoxesGrid extends HTMLElement {
 
   getVerticalSides = (row) => {
     const html = String.raw;
+    // let result = "";
+    // for (let i = 1; i < this.boxNumber - 2; i += 2) {
+    //   result += `
+    //     ${this.getHorizontalSides(i)}
+    //     ${this.getVerticalSides(i + 1)}
+    //   `;
+    // }
+
     return html`
       <button
         id="r${row}c1"
@@ -83,25 +93,22 @@ class DotBoxesGrid extends HTMLElement {
     `;
   };
 
+  renderDotsAndBoxes() {
+    let result = "";
+    for (let i = 1; i < this.boxNumber - 2; i += 2) {
+      result += `
+        ${this.getHorizontalSides(i)}
+        ${this.getVerticalSides(i + 1)}
+      `;
+    }
+    result += `${this.getHorizontalSides(this.boxNumber - 2)}`;
+    return result;
+  }
+
   render = () => {
     const html = String.raw;
     this.innerHTML = html`
-      <section id="${dotboxGrid}">
-        <!-- first dotted line -->
-        ${this.getHorizontalSides(1)}
-        <!-- first row -->
-        ${this.getVerticalSides(2)}
-        <!-- second dotted line -->
-        ${this.getHorizontalSides(3)}
-        <!-- second row -->
-        ${this.getVerticalSides(4)}
-        <!-- third dotted line -->
-        ${this.getHorizontalSides(5)}
-        <!-- third row -->
-        ${this.getVerticalSides(6)}
-        <!-- fourth dotted line -->
-        ${this.getHorizontalSides(7)}
-      </section>
+      <section id="${dotboxGrid}">${this.renderDotsAndBoxes()}</section>
     `;
   };
 }
