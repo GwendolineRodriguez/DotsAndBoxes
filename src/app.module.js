@@ -6,8 +6,8 @@ class App {
     const router = new Router(routerOutlet);
     // if (!localStorage.getItem("playerName")) {
     localStorage.setItem("playerName", "Player 1 👑");
-    localStorage.setItem("board", "5x5");
-    localStorage.setItem("boxNumber", "25");
+    localStorage.setItem("board", "2x2");
+    localStorage.setItem("boxNumber", "4");
     localStorage.setItem("difficulty", "easy");
     // }
     router.setRoutes([
@@ -21,7 +21,7 @@ class App {
       },
       { path: "/scores", component: "<game-scores></game-scores>" },
     ]);
-    this.registerServiceWorker();
+    // this.registerServiceWorker();
   }
 
   registerServiceWorker() {

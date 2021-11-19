@@ -16,7 +16,7 @@ body {
   font-family: "Nunito", sans-serif;
   font-weight: 400;
   font-size: 16px;
-  min-width: 100%;
+  width: 100vw;
   height: 100vh;
   overflow: hidden;
 }
@@ -25,24 +25,30 @@ body {
   display: grid;
   background-color: var(--background-color);
   padding: 2em 1em;
-  align-content: center;
   justify-items: center;
 }
 
 menu {
   display: grid;
-  width: 100%;
-  justify-items: center;
+  justify-items: end;
   align-items: center;
-  top: 5em;
-  position: fixed;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  height: fit-content;
 }
 
 menu a {
   text-decoration: none;
   color: var(--text-color);
-  grid-column-start: 2;
+}
+
+@media screen and (min-width: 700px) {
+  menu {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  menu a {
+    grid-column-start: 2;
+  }
 }
 
 .waves {
