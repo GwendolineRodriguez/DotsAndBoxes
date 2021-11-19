@@ -4,11 +4,12 @@ class App {
   constructor() {
     const routerOutlet = document.querySelector("main");
     const router = new Router(routerOutlet);
-    if (!localStorage.getItem("playerName")) {
-      localStorage.setItem("playerName", "Player 1 👑");
-      localStorage.setItem("board", "9");
-      localStorage.setItem("difficulty", "easy");
-    }
+    // if (!localStorage.getItem("playerName")) {
+    localStorage.setItem("playerName", "Player 1 👑");
+    localStorage.setItem("board", "5x5");
+    localStorage.setItem("boxNumber", "25");
+    localStorage.setItem("difficulty", "easy");
+    // }
     router.setRoutes([
       {
         path: "/",
