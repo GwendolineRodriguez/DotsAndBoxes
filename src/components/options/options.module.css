@@ -19,23 +19,14 @@
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  -webkit-appearance: button;
-  -moz-appearance: button;
-  appearance: button;
   cursor: pointer;
   text-decoration: none;
-  color: initial;
   color: var(--background-color);
   font-size: 2em;
   background-color: var(--accent-color);
   padding: 0.3em 0;
   border: none;
   border-radius: 3em;
-}
-
-a {
-  text-decoration: none;
-  color: var(--background-color);
 }
 
 .arrowBack {
