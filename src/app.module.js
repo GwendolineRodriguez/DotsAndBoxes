@@ -4,11 +4,11 @@ class App {
   constructor() {
     const routerOutlet = document.querySelector("main");
     const router = new Router(routerOutlet);
-    if (!localStorage.getItem("playerName")) {
-      localStorage.setItem("playerName", "Player 1 👑");
-      localStorage.setItem("board", "9");
-      localStorage.setItem("difficulty", "easy");
-    }
+    // if (!localStorage.getItem("playerName")) {
+    localStorage.setItem("playerName", "Player 1 👑");
+    localStorage.setItem("board", "4");
+    localStorage.setItem("difficulty", "easy");
+    // }
     router.setRoutes([
       {
         path: "/",
@@ -20,7 +20,7 @@ class App {
       },
       { path: "/scores", component: "<game-scores></game-scores>" },
     ]);
-    this.registerServiceWorker();
+    // this.registerServiceWorker();
   }
 
   registerServiceWorker() {
