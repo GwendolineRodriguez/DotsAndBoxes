@@ -32,22 +32,52 @@ class Options extends HTMLElement {
     console.log(this.options);
     this.render();
     this.setArrowBtns();
-    this.setEventListeners();
+    this.setPlayBtnEvent();
+  }
+
+  getItem(key, i) {
+    var keys = Object.keys(this.optionsBoard).sort(function (a, b) {
+      return a - b;
+    });
+    var index = keys.indexOf(key);
+    if ((i == -1 && index > 0) || (i == 1 && index < keys.length - 1)) {
+      index = index + i;
+    }
+    return keys[index];
+  }
+
+  updateArrowDisplay() {
+    this.boardBackBtn.style.display = "flex";
+    this.boardForwardBtn.style.display = "flex";
+    if (this.options.boxNumber === 4) {
+      this.boardBackBtn.style.display = "none";
+    }
+    if (this.options.boxNumber === 25) {
+      this.boardForwardBtn.style.display = "none";
+    }
   }
 
   setArrowBtns() {
     this.boardBackBtn = document.getElementById("boardBackBtn");
     this.boardForwardBtn = document.getElementById("boardForwardBtn");
-
-    if (this.options.boxNumber === "4") {
-      this.boardBackBtn.style.display = "none";
-    }
-    if (this.options.boxNumber === "25") {
-      this.boardForwardBtn.style.display = "none";
-    }
+    this.updateArrowDisplay();
+    this.boardBackBtn.addEventListener("click", () => {
+      const board = document.getElementById("board");
+      const currentBoardValue = board.value;
+      board.value = this.getItem(currentBoardValue, -1);
+      this.options.boxNumber = this.optionsBoard[board.value];
+      this.updateArrowDisplay();
+    });
+    this.boardForwardBtn.addEventListener("click", () => {
+      const board = document.getElementById("board");
+      const currentBoardValue = board.value;
+      board.value = this.getItem(currentBoardValue, +1);
+      this.options.boxNumber = this.optionsBoard[board.value];
+      this.updateArrowDisplay();
+    });
   }
 
-  setEventListeners() {
+  setPlayBtnEvent() {
     this.playBtn = document.getElementById("playBtn");
     const gameLink = this.playBtn.children[0];
     this.playBtn.addEventListener("click", () => {
