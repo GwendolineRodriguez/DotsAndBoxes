@@ -30,17 +30,25 @@ body {
 
 menu {
   display: grid;
-  width: 100%;
-  justify-items: center;
+  justify-items: end;
   align-items: center;
-  top: 5em;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  height: fit-content;
 }
 
 menu a {
   text-decoration: none;
   color: var(--text-color);
-  grid-column-start: 2;
+}
+
+@media screen and (min-width: 700px) {
+  menu {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  menu a {
+    grid-column-start: 2;
+  }
 }
 
 .waves {
