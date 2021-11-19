@@ -2,7 +2,6 @@
   color: var(--text-color);
   display: grid;
   justify-items: center;
-  margin: 2em 15em;
 }
 
 .elemWidth {
