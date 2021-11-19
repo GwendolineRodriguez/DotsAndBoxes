@@ -1,11 +1,12 @@
 import {
   options,
   actionBtn,
-  elemWidth,
+  optElem,
   inputField,
   optLabel,
   modularBtn,
-  selectInput,
+  arrowBack,
+  arrowForward,
 } from "./options.module.css";
 
 import arrowBackIcon from "./../../icons/arrow_back_24dp.svg";
@@ -72,66 +73,64 @@ class Options extends HTMLElement {
     this.innerHTML = html`
       <section id="${options}">
         <!-- Name -->
-        <label for="name" class="${optLabel}">Name</label>
-        <input
-          class="${inputField} ${elemWidth}"
-          id="name"
-          required
-          minlength="4"
-          maxlength="8"
-          size="10"
-          placeholder="Player 1"
-          value="${this.options.playerName}"
-        />
+        <label for="name" class="${optLabel} ${optElem}"
+          >Name
+          <input
+            class="${inputField}"
+            id="name"
+            required
+            minlength="4"
+            maxlength="8"
+            size="10"
+            placeholder="Player 1"
+            value="${this.options.playerName}"
+          />
+        </label>
         <!-- Board -->
-        <label for="board" class="${optLabel}">Board</label>
-        <span class="${selectInput}">
-          <button id="boardBackBtn" class="${modularBtn}" data-target="board">
-            <img class="icon" src="${arrowBackIcon}" alt="arrowBackIcon" />
-          </button>
+        <button
+          id="boardBackBtn"
+          class="${modularBtn} ${arrowBack}"
+          data-target="board"
+        >
+          <img class="icon" src="${arrowBackIcon}" alt="arrowBackIcon" />
+        </button>
+        <label for="board" class="${optLabel} ${optElem}"
+          >Board
           <input
             id="board"
             value="${this.options.board}"
-            class="${inputField} ${elemWidth}"
+            class="${inputField}"
             disabled
           />
-          <button
-            id="boardForwardBtn"
-            class="${modularBtn}"
-            data-target="board"
-          >
-            <img
-              class="icon"
-              src="${arrowForwardIcon}"
-              alt="arrowForwardIcon"
-            />
-          </button>
-        </span>
+        </label>
+        <button
+          id="boardForwardBtn"
+          class="${modularBtn} ${arrowForward}"
+          data-target="board"
+        >
+          <img class="icon" src="${arrowForwardIcon}" alt="arrowForwardIcon" />
+        </button>
         <!-- Difficulty -->
-        <label for="difficulty" class="${optLabel}">Difficulty</label>
-        <span class="${selectInput}">
-          <button class="${modularBtn}" data-target="difficulty">
-            <img class="icon" src="${arrowBackIcon}" alt="arrowBackIcon" />
-          </button>
+        <button class="${modularBtn} ${arrowBack}" data-target="difficulty">
+          <img class="icon" src="${arrowBackIcon}" alt="arrowBackIcon" />
+        </button>
+        <label for="difficulty" class="${optLabel} ${optElem}"
+          >Difficulty
           <input
             id="difficulty"
             value="${this.options.difficulty}"
-            class="${inputField} ${elemWidth}"
+            class="${inputField} ${optElem}"
             disabled
           />
-          <button class="${modularBtn}" data-target="difficulty">
-            <img
-              class="icon"
-              src="${arrowForwardIcon}"
-              alt="arrowForwardIcon"
-            />
-          </button>
-        </span>
-        <button id="playBtn" class="${actionBtn} ${elemWidth}">
+        </label>
+        <button class="${modularBtn} ${arrowForward}" data-target="difficulty">
+          <img class="icon" src="${arrowForwardIcon}" alt="arrowForwardIcon" />
+        </button>
+        <button id="playBtn" class="${actionBtn} ${optElem}">
           Play
           <a href="/game"></a>
         </button>
-        <a id="scoreBtn" class="${actionBtn} ${elemWidth}" href="/scores"
+        <a id="scoreBtn" class="${actionBtn} ${optElem}" href="/scores"
           >Scores</a
         >
       </section>

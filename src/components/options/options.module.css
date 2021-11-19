@@ -2,10 +2,15 @@
   color: var(--text-color);
   display: grid;
   justify-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: end;
+  justify-content: center;
+  justify-items: center;
+  row-gap: 1.5em;
 }
 
-.elemWidth {
-  border-radius: 3em;
+.optElem {
+  grid-column-start: 2;
 }
 
 .actionBtn {
@@ -24,8 +29,8 @@
   font-size: 2em;
   background-color: var(--accent-color);
   padding: 0.3em 0;
-  margin-top: 1em;
   border: none;
+  border-radius: 3em;
 }
 
 a {
@@ -33,10 +38,12 @@ a {
   color: var(--background-color);
 }
 
-.selectInput {
-  display: flex;
-  gap: 1em;
-  align-items: center;
+.arrowBack {
+  justify-self: end;
+}
+
+.arrowForward {
+  justify-self: start;
 }
 
 .modularBtn {
@@ -53,13 +60,17 @@ a {
 
 .optLabel {
   color: var(--text-color);
-  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .inputField {
   color: var(--dark-color);
+  border-radius: 3em;
   background-color: white;
-  padding: 1.5em 2em;
+  padding: 1.3em 2em;
   width: 20em;
+  margin-top: 0.3em;
   border: 2px solid var(--text-color);
 }
