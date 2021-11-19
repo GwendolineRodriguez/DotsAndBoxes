@@ -31,10 +31,12 @@
 
 .arrowBack {
   justify-self: end;
+  grid-column-start: 1;
 }
 
 .arrowForward {
   justify-self: start;
+  grid-column-start: 3;
 }
 
 .modularBtn {

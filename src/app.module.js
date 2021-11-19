@@ -6,8 +6,8 @@ class App {
     const router = new Router(routerOutlet);
     // if (!localStorage.getItem("playerName")) {
     localStorage.setItem("playerName", "Player 1 👑");
-    localStorage.setItem("board", "2x2");
-    localStorage.setItem("boxNumber", "4");
+    localStorage.setItem("board", "3x3");
+    localStorage.setItem("boxNumber", "9");
     localStorage.setItem("difficulty", "easy");
     // }
     router.setRoutes([

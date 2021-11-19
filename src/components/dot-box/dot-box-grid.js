@@ -29,12 +29,26 @@ class DotBoxesGrid extends HTMLElement {
     const difficulty = localStorage.getItem("difficulty");
     const boxNumber = localStorage.getItem("boxNumber");
     this.boxNumber = boxNumber;
+    const rootSqrt = Math.sqrt(this.boxNumber);
+    const rowCount = rootSqrt * 2 + 1;
     this.options = { playerName, board, boxNumber, difficulty };
     console.log(this.options);
     this.state = new GameController(this.options);
     this.state.setUpClasses(this.classes);
-    this.render();
+    this.render(rowCount);
+    this.setupGrid(rowCount);
     this.state.setUpEventListeners();
+  }
+
+  setupGrid(rowCount) {
+    const grid = document.getElementById(`${dotboxGrid}`);
+    let gridTempRow = "";
+    for (let i = 1; i < rowCount; i += 2) {
+      gridTempRow += "auto 1fr ";
+    }
+    gridTempRow += "auto";
+    let gridTempCol = gridTempRow;
+    grid.style["grid-template"] = `${gridTempRow} / ${gridTempCol}`;
   }
 
   getHorizonBtn(row, col) {
@@ -52,9 +66,9 @@ class DotBoxesGrid extends HTMLElement {
     return html`<span class="${dot}"></span>`;
   }
 
-  getHorizontalSides = (row) => {
+  getHorizontalSides(row, rowCount) {
     let result = "";
-    for (let i = 1; i < this.boxNumber - 2; i += 2) {
+    for (let i = 1; i < rowCount; i += 2) {
       result += `
         ${this.getDot()}
         ${this.getHorizonBtn(row, i)}
@@ -62,7 +76,7 @@ class DotBoxesGrid extends HTMLElement {
     }
     result += `${this.getDot()}`;
     return result;
-  };
+  }
 
   getVerticalBtn(row, col) {
     const html = String.raw;
@@ -79,36 +93,36 @@ class DotBoxesGrid extends HTMLElement {
     return html` <div id="r${row}Content${col}"></div> `;
   }
 
-  getVerticalSides = (row) => {
+  getVerticalSides(row, rowCount) {
     let result = "";
-    for (let i = 1, counter = 1; i < this.boxNumber - 2; i += 2, counter++) {
+    for (let i = 1, counter = 1; i < rowCount; i += 2, counter++) {
       result += `
         ${this.getVerticalBtn(row, i)}
         ${this.getBox(counter)}
       `;
     }
-    result += `${this.getVerticalBtn(row, this.boxNumber - 2)}`;
-    return result;
-  };
-
-  renderDotsAndBoxes() {
-    let result = "";
-    for (let i = 1; i < this.boxNumber - 2; i += 2) {
-      result += `
-        ${this.getHorizontalSides(i)}
-        ${this.getVerticalSides(i + 1)}
-      `;
-    }
-    result += `${this.getHorizontalSides(this.boxNumber - 2)}`;
+    result += `${this.getVerticalBtn(row, rowCount)}`;
     return result;
   }
 
-  render = () => {
+  renderDotsAndBoxes(rowCount) {
+    let result = "";
+    for (let i = 1; i < rowCount; i += 2) {
+      result += `
+        ${this.getHorizontalSides(i, rowCount)}
+        ${this.getVerticalSides(i + 1, rowCount)}
+      `;
+    }
+    result += `${this.getHorizontalSides(rowCount, rowCount)}`;
+    return result;
+  }
+
+  render(rowCount) {
     const html = String.raw;
     this.innerHTML = html`
-      <section id="${dotboxGrid}">${this.renderDotsAndBoxes()}</section>
+      <section id="${dotboxGrid}">${this.renderDotsAndBoxes(rowCount)}</section>
     `;
-  };
+  }
 }
 
 customElements.define("dot-boxes-grid", DotBoxesGrid);
