@@ -8,7 +8,7 @@ class App {
     localStorage.setItem("playerName", "Player 1 👑");
     localStorage.setItem("board", "3x3");
     localStorage.setItem("boxNumber", "9");
-    localStorage.setItem("difficulty", "easy");
+    localStorage.setItem("difficulty", "medium");
     // }
     router.setRoutes([
       {

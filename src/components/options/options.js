@@ -21,6 +21,7 @@ class Options extends HTMLElement {
       "4x4": 16,
       "5x5": 25,
     };
+    this.diffLevels = ["easy", "medium", "difficult"];
   }
 
   connectedCallback() {
@@ -31,7 +32,8 @@ class Options extends HTMLElement {
     this.options = { playerName, board, boxNumber, difficulty };
     console.log(this.options);
     this.render();
-    this.setArrowBtns();
+    this.setBoardArrowBtns();
+    this.setDifficultyArrowBtns();
     this.setPlayBtnEvent();
   }
 
@@ -46,7 +48,7 @@ class Options extends HTMLElement {
     return keys[index];
   }
 
-  updateArrowDisplay() {
+  updateBoardArrowDisplay() {
     this.boardBackBtn.style.display = "flex";
     this.boardForwardBtn.style.display = "flex";
     if (this.options.boxNumber === 4) {
@@ -57,23 +59,53 @@ class Options extends HTMLElement {
     }
   }
 
-  setArrowBtns() {
+  setBoardArrowBtns() {
     this.boardBackBtn = document.getElementById("boardBackBtn");
     this.boardForwardBtn = document.getElementById("boardForwardBtn");
-    this.updateArrowDisplay();
+    this.updateBoardArrowDisplay();
     this.boardBackBtn.addEventListener("click", () => {
       const board = document.getElementById("board");
       const currentBoardValue = board.value;
       board.value = this.getItem(currentBoardValue, -1);
       this.options.boxNumber = this.optionsBoard[board.value];
-      this.updateArrowDisplay();
+      this.updateBoardArrowDisplay();
     });
     this.boardForwardBtn.addEventListener("click", () => {
       const board = document.getElementById("board");
       const currentBoardValue = board.value;
       board.value = this.getItem(currentBoardValue, +1);
       this.options.boxNumber = this.optionsBoard[board.value];
-      this.updateArrowDisplay();
+      this.updateBoardArrowDisplay();
+    });
+  }
+
+  updateDiffArrowDisplay(value) {
+    this.diffBackBtn.style.display = "flex";
+    this.diffForwardBtn.style.display = "flex";
+    if (value === "easy") {
+      this.diffBackBtn.style.display = "none";
+    }
+    if (value === "difficult") {
+      this.diffForwardBtn.style.display = "none";
+    }
+  }
+
+  setDifficultyArrowBtns() {
+    this.diffBackBtn = document.getElementById("diffBackBtn");
+    this.diffForwardBtn = document.getElementById("diffForwardBtn");
+    const diffValue = document.getElementById("difficulty").value;
+    this.updateDiffArrowDisplay(diffValue);
+    this.diffBackBtn.addEventListener("click", () => {
+      const diff = document.getElementById("difficulty");
+      const currentDiffValueIdx = this.diffLevels.indexOf(diff.value);
+      diff.value = this.diffLevels[currentDiffValueIdx - 1];
+      this.updateDiffArrowDisplay(diff.value);
+    });
+    this.diffForwardBtn.addEventListener("click", () => {
+      const diff = document.getElementById("difficulty");
+      const currentDiffValueIdx = this.diffLevels.indexOf(diff.value);
+      diff.value = this.diffLevels[currentDiffValueIdx + 1];
+      this.updateDiffArrowDisplay(diff.value);
     });
   }
 
@@ -141,7 +173,11 @@ class Options extends HTMLElement {
           <img class="icon" src="${arrowForwardIcon}" alt="arrowForwardIcon" />
         </button>
         <!-- Difficulty -->
-        <button class="${modularBtn} ${arrowBack}" data-target="difficulty">
+        <button
+          id="diffBackBtn"
+          class="${modularBtn} ${arrowBack}"
+          data-target="difficulty"
+        >
           <img class="icon" src="${arrowBackIcon}" alt="arrowBackIcon" />
         </button>
         <label for="difficulty" class="${optLabel} ${optElem}"
@@ -153,7 +189,11 @@ class Options extends HTMLElement {
             disabled
           />
         </label>
-        <button class="${modularBtn} ${arrowForward}" data-target="difficulty">
+        <button
+          id="diffForwardBtn"
+          class="${modularBtn} ${arrowForward}"
+          data-target="difficulty"
+        >
           <img class="icon" src="${arrowForwardIcon}" alt="arrowForwardIcon" />
         </button>
         <button id="playBtn" class="${actionBtn} ${optElem}">
