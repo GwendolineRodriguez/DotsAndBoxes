@@ -51,12 +51,12 @@ class EndGameModal extends HTMLElement {
           <p id="playerScore2"></p>
         </div>
         <div id="${actionBtns}">
-          <button id="replayBtn" class="${modalBtn}">
+          <a id="replayBtn" class="${modalBtn}" href="/game">
             <img class="icon" src="${replayIcon}" alt="replayIcon" />
-          </button>
-          <button id="homeBtn" class="${modalBtn}">
+          </a>
+          <a id="homeBtn" class="${modalBtn}" href="/">
             <img class="icon" src="${homeIcon}" alt="homeIcon" />
-          </button>
+          </a>
         </div>
       </div>
       <div class="${overlay} ${hidden}" aria-hidden="true"></div>
@@ -87,16 +87,11 @@ class EndGameModal extends HTMLElement {
   };
 
   setBtnEventListeners = (state) => {
-    this.homeBtn.addEventListener("click", this.goHome);
+    this.homeBtn.addEventListener("click", this.close);
     this.replayBtn.addEventListener("click", (e) => {
       state.resetGame();
       this.close();
     });
-  };
-
-  goHome = () => {
-    console.error("Going home is not implemented yet !");
-    this.close();
   };
 }
 

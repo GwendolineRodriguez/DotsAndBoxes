@@ -1,19 +1,21 @@
 import Player from "./player";
 import DotBoxGame from "./dot-box-game";
+import Score from "../scores/score";
 
 class GameController {
-  constructor(boxNumber) {
-    this.maxScore = boxNumber;
-    this.player1 = new Player("Player 1", true);
+  constructor(options) {
+    this.boxNumber = options.board;
+    this.maxScore = this.boxNumber;
+    this.maxScore = 1;
+    this.player1 = new Player(options.playerName, true);
     this.player2 = new Player("Player 2", false);
     this.boxesOwned = 0;
     this.game = new DotBoxGame();
-    this.boxes = this.game.generateBoxes(boxNumber);
+    this.boxes = this.game.generateBoxes(this.boxNumber);
     this.endGameModal = document.querySelector("end-game-modal");
   }
 
   playTurn = (sideId, player) => {
-    this.endGameModal.open(this);
     const btn = document.getElementById(sideId);
     this.game.markBtnAsOwned(btn, player);
     const boxes = this.boxes.filter((box) =>
@@ -29,20 +31,19 @@ class GameController {
         box.owner = player.name;
         this.game.markBoxAsOwned(box, player, `${this.selectable}`);
         if (this.boxesOwned === this.maxScore) {
-          console.log("Game Over !! 🔥🔥");
-          console.log(`${this.getWinner()} wins !!!`);
           this.gameOver = true;
+          this.registerScore();
           this.endGameModal.open(this);
         }
       }
     });
     // Simulate other player, computer with a random ID
-    // if (player.isHuman && !boxCompleted) {
-    //   this.playTurn(this.game.getRandomSideId(), this.player2);
-    // }
-    // if (!player.isHuman && boxCompleted && !this.gameOver) {
-    //   this.playTurn(this.game.getRandomSideId(), this.player2);
-    // }
+    if (player.isHuman && !boxCompleted) {
+      this.playTurn(this.game.getRandomSideId(), this.player2);
+    }
+    if (!player.isHuman && boxCompleted && !this.gameOver) {
+      this.playTurn(this.game.getRandomSideId(), this.player2);
+    }
   };
 
   setUpEventListeners = () => {
@@ -69,8 +70,17 @@ class GameController {
   };
 
   resetGame = () => {
+    // could just refreshpage with options in route ?
     console.error("ResetGame not implemented yet");
   };
+
+  registerScore() {
+    const score = new Score(this.player1, this.player2, this.boxNumber);
+    const existingScores = localStorage.getItem("scores");
+    const newScores = JSON.parse(existingScores) || [];
+    newScores.push(score);
+    localStorage.setItem("scores", JSON.stringify(newScores));
+  }
 }
 
 export default GameController;

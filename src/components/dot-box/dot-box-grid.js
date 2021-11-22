@@ -24,81 +24,105 @@ class DotBoxesGrid extends HTMLElement {
   }
 
   connectedCallback() {
-    this.boxNumber = Number(this.getAttribute("boxNumber"));
-    this.state = new GameController(this.boxNumber);
+    const playerName = localStorage.getItem("playerName");
+    const board = localStorage.getItem("board");
+    const difficulty = localStorage.getItem("difficulty");
+    const boxNumber = localStorage.getItem("boxNumber");
+    this.boxNumber = boxNumber;
+    const rootSqrt = Math.sqrt(this.boxNumber);
+    const rowCount = rootSqrt * 2 + 1;
+    this.options = { playerName, board, boxNumber, difficulty };
+    console.log(this.options);
+    this.state = new GameController(this.options);
     this.state.setUpClasses(this.classes);
-    this.render();
+    this.render(rowCount);
+    this.setupGrid(rowCount);
     this.state.setUpEventListeners();
   }
 
-  getHorizontalSides = (row) => {
-    const html = String.raw;
-    return html`
-      <span class="${dot}"></span>
-      <button
-        id="r${row}c2"
-        class="${sideBtn} ${selectable} ${horizonBtn}"
-      ></button>
-      <span class="${dot}"></span>
-      <button
-        id="r${row}c4"
-        class="${sideBtn} ${selectable} ${horizonBtn}"
-      ></button>
-      <span class="${dot}"></span>
-      <button
-        id="r${row}c6"
-        class="${sideBtn} ${selectable} ${horizonBtn}"
-      ></button>
-      <span class="${dot}"></span>
-    `;
-  };
+  setupGrid(rowCount) {
+    const grid = document.getElementById(`${dotboxGrid}`);
+    let gridTempRow = "";
+    for (let i = 1; i < rowCount; i += 2) {
+      gridTempRow += "auto 1fr ";
+    }
+    gridTempRow += "auto";
+    let gridTempCol = gridTempRow;
+    grid.style["grid-template"] = `${gridTempRow} / ${gridTempCol}`;
+  }
 
-  getVerticalSides = (row) => {
+  getHorizonBtn(row, col) {
     const html = String.raw;
     return html`
       <button
-        id="r${row}c1"
-        class="${sideBtn} ${selectable} ${verticaBtn}"
+        id="r${row}c${col}"
+        class="${sideBtn} ${selectable} ${horizonBtn}"
       ></button>
-      <div id="r${row}Content1"></div>
+    `;
+  }
+
+  getDot() {
+    const html = String.raw;
+    return html`<span class="${dot}"></span>`;
+  }
+
+  getHorizontalSides(row, rowCount) {
+    let result = "";
+    for (let i = 1; i < rowCount; i += 2) {
+      result += `
+        ${this.getDot()}
+        ${this.getHorizonBtn(row, i)}
+      `;
+    }
+    result += `${this.getDot()}`;
+    return result;
+  }
+
+  getVerticalBtn(row, col) {
+    const html = String.raw;
+    return html`
       <button
-        id="r${row}c3"
-        class="${sideBtn} ${selectable} ${verticaBtn}"
-      ></button>
-      <div id="r${row}Content2"></div>
-      <button
-        id="r${row}c5"
-        class="${sideBtn} ${selectable} ${verticaBtn}"
-      ></button>
-      <div id="r${row}Content3"></div>
-      <button
-        id="r${row}c7"
+        id="r${row}c${col}"
         class="${sideBtn} ${selectable} ${verticaBtn}"
       ></button>
     `;
-  };
+  }
 
-  render = () => {
+  getBox(row, col) {
+    const html = String.raw;
+    return html` <div id="r${row}Content${col}"></div> `;
+  }
+
+  getVerticalSides(row, rowCount) {
+    let result = "";
+    for (let i = 1, counter = 1; i < rowCount; i += 2, counter++) {
+      result += `
+        ${this.getVerticalBtn(row, i)}
+        ${this.getBox(counter)}
+      `;
+    }
+    result += `${this.getVerticalBtn(row, rowCount)}`;
+    return result;
+  }
+
+  renderDotsAndBoxes(rowCount) {
+    let result = "";
+    for (let i = 1; i < rowCount; i += 2) {
+      result += `
+        ${this.getHorizontalSides(i, rowCount)}
+        ${this.getVerticalSides(i + 1, rowCount)}
+      `;
+    }
+    result += `${this.getHorizontalSides(rowCount, rowCount)}`;
+    return result;
+  }
+
+  render(rowCount) {
     const html = String.raw;
     this.innerHTML = html`
-      <section id="${dotboxGrid}">
-        <!-- first dotted line -->
-        ${this.getHorizontalSides(1)}
-        <!-- first row -->
-        ${this.getVerticalSides(2)}
-        <!-- second dotted line -->
-        ${this.getHorizontalSides(3)}
-        <!-- second row -->
-        ${this.getVerticalSides(4)}
-        <!-- third dotted line -->
-        ${this.getHorizontalSides(5)}
-        <!-- third row -->
-        ${this.getVerticalSides(6)}
-        <!-- fourth dotted line -->
-        ${this.getHorizontalSides(7)}
-      </section>
+      <section id="${dotboxGrid}">${this.renderDotsAndBoxes(rowCount)}</section>
     `;
-  };
+  }
 }
 
 customElements.define("dot-boxes-grid", DotBoxesGrid);

@@ -48,6 +48,9 @@
   background-color: var(--accent-color);
   border-radius: 50%;
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #endGameModalTitle {
