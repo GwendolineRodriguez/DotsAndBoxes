@@ -33,8 +33,7 @@ class DotBoxesGrid extends HTMLElement {
     const rowCount = rootSqrt * 2 + 1;
     this.options = { playerName, board, boxNumber, difficulty };
     console.log(this.options);
-    this.state = new GameController(this.options);
-    this.state.setUpClasses(this.classes);
+    this.state = new GameController(this.options, this.classes);
     this.render(rowCount);
     this.setupGrid(rowCount);
     this.state.setUpEventListeners();

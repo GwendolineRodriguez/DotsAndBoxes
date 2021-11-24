@@ -76,7 +76,6 @@ class EndGameModal extends HTMLElement {
     this.overlay.classList.remove(`${hidden}`);
     this.overlay.removeAttribute("aria-hidden");
     this.homeBtn.focus();
-    // Record Scores
   };
 
   close = () => {
@@ -89,7 +88,6 @@ class EndGameModal extends HTMLElement {
   setBtnEventListeners = (state) => {
     this.homeBtn.addEventListener("click", this.close);
     this.replayBtn.addEventListener("click", (e) => {
-      state.resetGame();
       this.close();
     });
   };

@@ -3,21 +3,21 @@ import DotBoxGame from "./dot-box-game";
 import Score from "../scores/score";
 
 class GameController {
-  constructor(options) {
+  constructor(options, classes) {
     this.boxNumber = options.boxNumber;
     this.maxScore = this.boxNumber;
-    this.maxScore = 1;
     this.player1 = new Player(options.playerName, true);
     this.player2 = new Player("Player 2", false);
     this.boxesOwned = 0;
     this.game = new DotBoxGame();
     this.boxes = this.game.generateBoxes(this.boxNumber);
     this.endGameModal = document.querySelector("end-game-modal");
+    this.setUpClasses(classes);
   }
 
   playTurn = (sideId, player) => {
     const btn = document.getElementById(sideId);
-    this.game.markBtnAsOwned(btn, player);
+    this.game.markBtnAsOwned(btn, player, `${this.selectable}`);
     const boxes = this.boxes.filter((box) =>
       Object.keys(box.sideIds).includes(sideId)
     );
@@ -29,8 +29,8 @@ class GameController {
         player.score++;
         this.boxesOwned++;
         box.owner = player.name;
-        this.game.markBoxAsOwned(box, player, `${this.selectable}`);
-        if (this.boxesOwned === this.maxScore) {
+        this.game.markBoxAsOwned(box, player);
+        if (this.boxesOwned.toString() === this.maxScore) {
           this.gameOver = true;
           this.registerScore();
           this.endGameModal.open(this);
@@ -67,11 +67,6 @@ class GameController {
     this.selectable = classes.selectable;
     this.player1.color = classes.player1Color;
     this.player2.color = classes.player2Color;
-  };
-
-  resetGame = () => {
-    // could just refreshpage with options in route ?
-    console.error("ResetGame not implemented yet");
   };
 
   registerScore() {
