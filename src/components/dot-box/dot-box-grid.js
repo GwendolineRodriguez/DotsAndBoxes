@@ -68,7 +68,7 @@ class DotBoxesGrid extends HTMLElement {
 
   getHorizontalSides(row, rowCount) {
     let result = "";
-    for (let i = 1; i < rowCount; i += 2) {
+    for (let i = 2; i < rowCount; i += 2) {
       result += `
         ${this.getDot()}
         ${this.getHorizonBtn(row, i)}
@@ -98,7 +98,7 @@ class DotBoxesGrid extends HTMLElement {
     for (let i = 1, counter = 1; i < rowCount; i += 2, counter++) {
       result += `
         ${this.getVerticalBtn(row, i)}
-        ${this.getBox(counter)}
+        ${this.getBox(row, counter)}
       `;
     }
     result += `${this.getVerticalBtn(row, rowCount)}`;

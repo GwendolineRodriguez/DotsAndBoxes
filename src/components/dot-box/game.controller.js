@@ -4,7 +4,7 @@ import Score from "../scores/score";
 
 class GameController {
   constructor(options) {
-    this.boxNumber = options.board;
+    this.boxNumber = options.boxNumber;
     this.maxScore = this.boxNumber;
     this.maxScore = 1;
     this.player1 = new Player(options.playerName, true);
