@@ -9,8 +9,7 @@ class GameController {
     this.player1 = new Player(options.playerName, true);
     this.player2 = new Player("Player 2", false);
     this.boxesOwned = 0;
-    this.game = new DotBoxGame();
-    this.boxes = this.game.generateBoxes(this.boxNumber);
+    this.game = new DotBoxGame(this.boxNumber);
     this.endGameModal = document.querySelector("end-game-modal");
     this.gameOver = false;
     this.setUpClasses(classes);
@@ -19,7 +18,7 @@ class GameController {
   playTurn = (sideId, player) => {
     const btn = document.getElementById(sideId);
     this.game.markBtnAsOwned(btn, player, `${this.selectable}`);
-    const boxes = this.boxes.filter((box) =>
+    const boxes = this.game.boxes.filter((box) =>
       Object.keys(box.sideIds).includes(sideId)
     );
     let boxesCompleted = 0;

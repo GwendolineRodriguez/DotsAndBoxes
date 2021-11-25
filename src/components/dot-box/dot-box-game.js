@@ -1,5 +1,7 @@
 class DotBoxGame {
-  constructor() {}
+  constructor(boxNumber) {
+    this.boxes = this.generateBoxes(boxNumber);
+  }
 
   generateBoxes = (boxNumber) => {
     this.boxes = [];
