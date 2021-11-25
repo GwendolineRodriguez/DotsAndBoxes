@@ -12,6 +12,7 @@ class GameController {
     this.game = new DotBoxGame();
     this.boxes = this.game.generateBoxes(this.boxNumber);
     this.endGameModal = document.querySelector("end-game-modal");
+    this.gameOver = false;
     this.setUpClasses(classes);
   }
 
@@ -21,11 +22,14 @@ class GameController {
     const boxes = this.boxes.filter((box) =>
       Object.keys(box.sideIds).includes(sideId)
     );
-    let boxCompleted = false;
+    let boxesCompleted = 0;
     boxes.forEach((box) => {
       box.sideIds[sideId] = player.name;
-      boxCompleted = this.game.boxIsCompleted(box);
-      if (boxCompleted) {
+      let isCurrentBoxCompleted = this.game.boxIsCompleted(box);
+      if (isCurrentBoxCompleted) {
+        boxesCompleted++;
+      }
+      if (isCurrentBoxCompleted) {
         player.score++;
         this.boxesOwned++;
         box.owner = player.name;
@@ -38,10 +42,10 @@ class GameController {
       }
     });
     // Simulate other player, computer with a random ID
-    if (player.isHuman && !boxCompleted) {
+    if (player.isHuman && boxesCompleted === 0) {
       this.playTurn(this.game.getRandomSideId(), this.player2);
     }
-    if (!player.isHuman && boxCompleted && !this.gameOver) {
+    if (!player.isHuman && boxesCompleted > 0 && !this.gameOver) {
       this.playTurn(this.game.getRandomSideId(), this.player2);
     }
   };
@@ -75,6 +79,10 @@ class GameController {
     const newScores = JSON.parse(existingScores) || [];
     newScores.push(score);
     localStorage.setItem("scores", JSON.stringify(newScores));
+  }
+
+  resetGame() {
+    location.reload();
   }
 }
 

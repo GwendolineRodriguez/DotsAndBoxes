@@ -198,9 +198,13 @@ class Options extends HTMLElement {
         </button>
         <button id="playBtn" class="${actionBtn} ${optElem}">
           Play
-          <a href="/game"></a>
+          <a href="/game" aria-label="Play"></a>
         </button>
-        <a id="scoreBtn" class="${actionBtn} ${optElem}" href="/scores"
+        <a
+          id="scoreBtn"
+          class="${actionBtn} ${optElem}"
+          href="/scores"
+          aria-label="Scores"
           >Scores</a
         >
       </section>

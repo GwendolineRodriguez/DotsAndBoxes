@@ -51,10 +51,15 @@ class EndGameModal extends HTMLElement {
           <p id="playerScore2"></p>
         </div>
         <div id="${actionBtns}">
-          <a id="replayBtn" class="${modalBtn}" href="/game">
+          <a
+            id="replayBtn"
+            class="${modalBtn}"
+            href="/game"
+            aria-label="Replay"
+          >
             <img class="icon" src="${replayIcon}" alt="replayIcon" />
           </a>
-          <a id="homeBtn" class="${modalBtn}" href="/">
+          <a id="homeBtn" class="${modalBtn}" href="/" aria-label="Home">
             <img class="icon" src="${homeIcon}" alt="homeIcon" />
           </a>
         </div>
@@ -89,6 +94,7 @@ class EndGameModal extends HTMLElement {
     this.homeBtn.addEventListener("click", this.close);
     this.replayBtn.addEventListener("click", (e) => {
       this.close();
+      this.state.resetGame();
     });
   };
 }
