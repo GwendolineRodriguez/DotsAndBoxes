@@ -115,7 +115,7 @@ class ThemeToggler extends HTMLElement {
     this.innerHTML = html`
       <label for="themeToggler" class="${toggler}">
         <input
-          tabindex="1"
+          tabindex="0"
           id="themeToggler"
           name="themeToggler"
           type="checkbox"
