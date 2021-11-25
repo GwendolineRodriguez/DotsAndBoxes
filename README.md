@@ -6,16 +6,16 @@ A SPA Dots & Boxes game written in vanilla javascript, accessible, with homemade
 
 ## Features
 
-- Written in pure Vanilla Javascript
+- Written in pure Vanilla Javascript.
 
-- Homemade Routing : use of History Browser API
+- Homemade Routing : use of History Browser API.
 
-- PWA : Caching through Service Worker for offline access
+- PWA : Caching through Service Worker for offline access.
 
-- CSP for Security, and LightHouse Score of
+- CSP for Security, and LightHouse Score of 100.
 
-- Accessibility : light/dark mode, Contrast checked, game playable through Keyboard, LightHouse Score of
+- Accessibility : light/dark mode, Contrast checked, game playable through Keyboard, LightHouse Score of 90.
 
 - Board Size from 2x2 to 5x5.
 
-- AI made with DCEL, Doubly Connected Edge List
+- AI made with DCEL, minmax algorithm with Doubly Connected Edge List to hold map data, with Alpha Pruning Heuristic method.
