@@ -16,10 +16,10 @@ class Options extends HTMLElement {
   constructor() {
     super();
     this.optionsBoard = {
-      "2x2": 4,
       "3x3": 9,
       "4x4": 16,
       "5x5": 25,
+      "6x6": 36,
     };
     this.diffLevels = ["easy", "medium", "difficult"];
   }
@@ -51,10 +51,10 @@ class Options extends HTMLElement {
   updateBoardArrowDisplay() {
     this.boardBackBtn.style.display = "flex";
     this.boardForwardBtn.style.display = "flex";
-    if (this.options.boxNumber === 4) {
+    if (this.options.boxNumber === 9) {
       this.boardBackBtn.style.display = "none";
     }
-    if (this.options.boxNumber === 25) {
+    if (this.options.boxNumber === 36) {
       this.boardForwardBtn.style.display = "none";
     }
   }

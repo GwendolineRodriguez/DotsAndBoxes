@@ -9,7 +9,7 @@ class GameController {
     this.player1 = new Player(options.playerName, true);
     this.player2 = new Player("Player 2", false);
     this.boxesOwned = 0;
-    this.game = new DotBoxGame(this.boxNumber);
+    this.game = new DotBoxGame(this.boxNumber, options.difficulty);
     this.endGameModal = document.querySelector("end-game-modal");
     this.gameOver = false;
     this.setUpClasses(classes);
@@ -42,10 +42,10 @@ class GameController {
     });
     // Simulate other player, computer with a random ID
     if (player.isHuman && boxesCompleted === 0) {
-      this.playTurn(this.game.getRandomSideId(), this.player2);
+      this.playTurn(this.game.chooseSideId(), this.player2);
     }
     if (!player.isHuman && boxesCompleted > 0 && !this.gameOver) {
-      this.playTurn(this.game.getRandomSideId(), this.player2);
+      this.playTurn(this.game.chooseSideId(), this.player2);
     }
   };
 
