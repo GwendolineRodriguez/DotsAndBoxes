@@ -2,6 +2,19 @@ class DotBoxGame {
   constructor(boxNumber, difficulty) {
     this.boxes = this.generateBoxes(boxNumber);
     this.difficulty = difficulty;
+    this.sharedSides = this.getSharedSides();
+  }
+
+  getSharedSides() {
+    let sharedSides = [];
+    for (let box of this.boxes) {
+      for (let side of Object.entries(box.sideIds)) {
+        if (!this.isBorder(side[0])) {
+          sharedSides.push(side);
+        }
+      }
+    }
+    return [...new Set(sharedSides)];
   }
 
   generateBoxes = (boxNumber) => {
@@ -46,7 +59,36 @@ class DotBoxGame {
     return this.getRandomSideId();
   }
 
+  getAdjacentBoxes(sideId) {
+    return this.boxes.filter((box) =>
+      Object.keys(box.sideIds).includes(sideId)
+    );
+  }
+
+  isBorder(sideId) {
+    const boxes = this.getAdjacentBoxes(sideId);
+
+    if (boxes.length === 1) return true;
+    return false;
+  }
+
   getNextClosingSideBoxAvoidDoubleCross() {
+    for (let side of this.sharedSides) {
+      if (side[1] !== "") continue;
+      const boxes = this.getAdjacentBoxes(side[0]);
+      let ownedSides = 0;
+      let borderSides = [];
+      for (let box of boxes) {
+        for (let side of Object.entries(box.sideIds)) {
+          if (this.isBorder(side[0]) && side[1] === "") borderSides.push(side);
+          if (side[1] !== "") ownedSides++;
+        }
+        if (ownedSides === 1 || ownedSides === 4) break;
+      }
+      if (ownedSides === 5 && borderSides.length === 1) {
+        return borderSides[0][0];
+      }
+    }
     return this.getNextClosingSideBoxOrRandom();
   }
 
@@ -107,9 +149,7 @@ class DotBoxGame {
   }
 
   isThirdSide(sideId) {
-    const boxes = this.boxes.filter((box) =>
-      Object.keys(box.sideIds).includes(sideId)
-    );
+    const boxes = this.getAdjacentBoxes(sideId);
     for (let box of boxes) {
       let ownedSideIds = 0;
       for (let sideOwner of Object.values(box.sideIds)) {
