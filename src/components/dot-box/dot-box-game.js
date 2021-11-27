@@ -32,13 +32,13 @@ class DotBoxGame {
   chooseSideId() {
     switch (this.difficulty) {
       case "easy":
-        return this.getRandomSideId();
-      case "medium":
         return this.getNextClosingSideBoxOrRandom();
+      case "medium":
+        return this.getNextClosingSideBoxAvoidDoubleCross();
       case "difficult":
         return this.getMinMaxSideId();
       default:
-        return this.getRandomSideId();
+        return this.getNextClosingSideBoxOrRandom();
     }
   }
 
@@ -46,7 +46,19 @@ class DotBoxGame {
     return this.getRandomSideId();
   }
 
+  getNextClosingSideBoxAvoidDoubleCross() {
+    return this.getNextClosingSideBoxOrRandom();
+  }
+
   getNextClosingSideBoxOrRandom() {
+    let closingSideBox = this.getNextClosingSideBox();
+    if (closingSideBox) {
+      return closingSideBox;
+    }
+    return this.getRandomSideId();
+  }
+
+  getNextClosingSideBox() {
     for (let box of this.boxes) {
       let owned = 0;
       let unOwnedSide = "";
@@ -61,7 +73,7 @@ class DotBoxGame {
         return unOwnedSide;
       }
     }
-    return this.getRandomSideId();
+    return null;
   }
 
   getRandomSideId() {
@@ -77,7 +89,37 @@ class DotBoxGame {
     }, []);
     const availableSides = [...new Set(allSides)];
     const i = Math.floor(Math.random() * availableSides.length);
+
+    if (!this.isThirdSide(availableSides[i])) {
+      return availableSides[i];
+    }
+    let sideId = this.tryGetNonThirdSideId(availableSides, i);
+    return sideId;
+  }
+
+  tryGetNonThirdSideId(availableSides, i) {
+    for (let sideId of availableSides) {
+      if (!this.isThirdSide(sideId)) {
+        return sideId;
+      }
+    }
     return availableSides[i];
+  }
+
+  isThirdSide(sideId) {
+    const boxes = this.boxes.filter((box) =>
+      Object.keys(box.sideIds).includes(sideId)
+    );
+    for (let box of boxes) {
+      let ownedSideIds = 0;
+      for (let sideOwner of Object.values(box.sideIds)) {
+        if (sideOwner != "") {
+          ownedSideIds++;
+        }
+      }
+      if (ownedSideIds === 2) return true;
+    }
+    return false;
   }
 
   boxIsCompleted = (box) => !Object.values(box.sideIds).includes("");

@@ -40,7 +40,7 @@ class GameController {
         }
       }
     });
-    // Simulate other player, computer with a random ID
+    // Simulate other player, computer
     if (player.isHuman && boxesCompleted === 0) {
       this.playTurn(this.game.chooseSideId(), this.player2);
     }

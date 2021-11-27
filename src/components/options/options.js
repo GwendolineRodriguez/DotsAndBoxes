@@ -51,10 +51,10 @@ class Options extends HTMLElement {
   updateBoardArrowDisplay() {
     this.boardBackBtn.style.display = "flex";
     this.boardForwardBtn.style.display = "flex";
-    if (this.options.boxNumber === 9) {
+    if (this.options.boxNumber == 9) {
       this.boardBackBtn.style.display = "none";
     }
-    if (this.options.boxNumber === 36) {
+    if (this.options.boxNumber == 36) {
       this.boardForwardBtn.style.display = "none";
     }
   }
