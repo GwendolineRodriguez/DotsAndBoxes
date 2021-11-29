@@ -8,14 +8,6 @@ class EasyGameAI extends GameAI {
   chooseSideId() {
     return this.getNextClosingSideBoxOrRandom();
   }
-
-  getNextClosingSideBoxOrRandom() {
-    let closingSideBox = this.getNextClosingSideBox();
-    if (closingSideBox) {
-      return closingSideBox;
-    }
-    return this.getRandomSideId();
-  }
 }
 
 export default EasyGameAI;

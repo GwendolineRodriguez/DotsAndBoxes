@@ -10,7 +10,7 @@ class MediumGameAI extends GameAI {
   }
 
   getNextClosingSideBoxAndDoubleCross() {
-    for (let side of this.sharedSides) {
+    for (let side of this.gridController.sharedSides) {
       if (side[1] !== "") continue;
       const boxes = this.gridController.getAdjacentBoxes(side[0]);
       let ownedSides = 0;

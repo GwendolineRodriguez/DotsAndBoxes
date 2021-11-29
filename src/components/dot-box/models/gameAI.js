@@ -25,6 +25,14 @@ class GameAI {
     return null;
   }
 
+  getNextClosingSideBoxOrRandom() {
+    let closingSideBox = this.getNextClosingSideBox();
+    if (closingSideBox) {
+      return closingSideBox;
+    }
+    return this.getRandomSideId();
+  }
+
   getRandomSideId() {
     const availableSides = this.gridController.availableSides;
     const i = Math.floor(Math.random() * availableSides.length);
