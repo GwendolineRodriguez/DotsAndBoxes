@@ -73,7 +73,7 @@ class EndGameModal extends HTMLElement {
     const player1 = state.player1;
     const player2 = state.player2;
     this.setBtnEventListeners(state);
-    this.modalTitle.innerHTML = `${state.getWinner()} wins ! 🥳🔥`;
+    this.modalTitle.innerHTML = `${state.winner} wins ! 🥳🔥`;
     this.playerScore1.innerHTML = html` ${player1.name}<br />${player1.score} `;
     this.playerScore2.innerHTML = html` ${player2.name}<br />${player2.score} `;
     this.modal.classList.remove(`${hidden}`);
@@ -94,7 +94,7 @@ class EndGameModal extends HTMLElement {
     this.homeBtn.addEventListener("click", this.close);
     this.replayBtn.addEventListener("click", (e) => {
       this.close();
-      this.state.resetGame();
+      state.resetGame();
     });
   };
 }

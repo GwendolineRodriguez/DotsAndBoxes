@@ -2,52 +2,26 @@ import {
   dotboxGrid,
   dot,
   sideBtn,
-  marked,
   selectable,
   horizonBtn,
   verticaBtn,
   player1Color,
   player2Color,
-} from "./dot-box-grid.module.css";
-import GameController from "./game.controller";
+} from "./dotsAndBoxes.module.css";
 
-class DotBoxesGrid extends HTMLElement {
+class GameGrid {
   constructor() {
-    super();
-    this.classes = {
+    this.classes = this.getClasses();
+  }
+
+  getClasses() {
+    return {
       sideBtn: `${sideBtn}`,
-      marked: `${marked}`,
       selectable: `${selectable}`,
       player1Color: `${player1Color}`,
       player2Color: `${player2Color}`,
+      dotboxGrid: `${dotboxGrid}`,
     };
-  }
-
-  connectedCallback() {
-    const playerName = localStorage.getItem("playerName");
-    const board = localStorage.getItem("board");
-    const difficulty = localStorage.getItem("difficulty");
-    const boxNumber = localStorage.getItem("boxNumber");
-    this.boxNumber = boxNumber;
-    const rootSqrt = Math.sqrt(this.boxNumber);
-    const rowCount = rootSqrt * 2 + 1;
-    this.options = { playerName, board, boxNumber, difficulty };
-    console.log(this.options);
-    this.state = new GameController(this.options, this.classes);
-    this.render(rowCount);
-    this.setupGrid(rowCount);
-    this.state.setUpEventListeners();
-  }
-
-  setupGrid(rowCount) {
-    const grid = document.getElementById(`${dotboxGrid}`);
-    let gridTempRow = "";
-    for (let i = 1; i < rowCount; i += 2) {
-      gridTempRow += "auto 1fr ";
-    }
-    gridTempRow += "auto";
-    let gridTempCol = gridTempRow;
-    grid.style["grid-template"] = `${gridTempRow} / ${gridTempCol}`;
   }
 
   getHorizonBtn(row, col) {
@@ -116,12 +90,12 @@ class DotBoxesGrid extends HTMLElement {
     return result;
   }
 
-  render(rowCount) {
+  component(rowCount) {
     const html = String.raw;
-    this.innerHTML = html`
+    return html`
       <section id="${dotboxGrid}">${this.renderDotsAndBoxes(rowCount)}</section>
     `;
   }
 }
 
-customElements.define("dot-boxes-grid", DotBoxesGrid);
+export default GameGrid;

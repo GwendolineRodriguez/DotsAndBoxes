@@ -40,10 +40,6 @@
   box-shadow: 0 0.5em 3em var(--accent-color);
 }
 
-.marked {
-  background-color: var(--accent-color);
-}
-
 .horizonBtn {
   height: 1em;
   align-self: center;

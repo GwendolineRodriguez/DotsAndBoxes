@@ -17,7 +17,7 @@ class App {
       },
       {
         path: "/game",
-        component: "<dot-boxes-grid></dot-boxes-grid>",
+        component: "<dots-and-boxes></dots-and-boxes>",
       },
       { path: "/scores", component: "<game-scores></game-scores>" },
     ]);
