@@ -22,12 +22,6 @@ A SPA Dots & Boxes game written in vanilla javascript, accessible, with homemade
 
 ## Bugs to fix
 
-- draw not possible
-
-- mobile disabled input styles
-
-- limit scores to ten bests
-
 - service worker not working
 
 - routing, cannot go back on desktop and cannot access game on mobile
