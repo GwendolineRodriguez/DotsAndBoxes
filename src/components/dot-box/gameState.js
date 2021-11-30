@@ -13,6 +13,7 @@ class GameState {
   }
 
   get winner() {
+    if (this.player1.score === this.player2.score) return null;
     return this.player1.score > this.player2.score
       ? this.player1.name
       : this.player2.name;

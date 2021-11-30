@@ -68,12 +68,20 @@ class EndGameModal extends HTMLElement {
     `;
   }
 
+  displayWinner(winner) {
+    if (winner) {
+      this.modalTitle.innerHTML = `${winner} wins ! 🥳 🔥`;
+    } else {
+      this.modalTitle.innerHTML = "It's a draw ! 💪 🥰";
+    }
+  }
+
   open(state) {
     const html = String.raw;
     const player1 = state.player1;
     const player2 = state.player2;
     this.setBtnEventListeners(state);
-    this.modalTitle.innerHTML = `${state.winner} wins ! 🥳🔥`;
+    this.displayWinner(state.winner);
     this.playerScore1.innerHTML = html` ${player1.name}<br />${player1.score} `;
     this.playerScore2.innerHTML = html` ${player2.name}<br />${player2.score} `;
     this.modal.classList.remove(`${hidden}`);
