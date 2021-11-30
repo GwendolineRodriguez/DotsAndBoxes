@@ -27,7 +27,7 @@ class Scores extends HTMLElement {
     const html = String.raw;
     this.innerHTML = html`
       <section>
-        <h1>Scores</h1>
+        <h1>Best Scores</h1>
         <table>
           <tr>
             <th>Player 1</th>

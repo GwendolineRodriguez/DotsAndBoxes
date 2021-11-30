@@ -22,8 +22,10 @@ class GameState {
     const score = new Score(this.player1, this.player2, this.maxScore);
     const existingScores = localStorage.getItem("scores");
     const newScores = JSON.parse(existingScores) || [];
-    newScores.push(score);
-    localStorage.setItem("scores", JSON.stringify(newScores));
+    if (this.isNewBestScore(newScores, score)) {
+      this.addNewBestScore(newScores, score);
+      localStorage.setItem("scores", JSON.stringify(newScores));
+    }
   }
 
   checkEndGame() {
@@ -36,6 +38,22 @@ class GameState {
 
   resetGame() {
     location.reload();
+  }
+
+  isNewBestScore(scores, newScore) {
+    if (scores.length < 9) return true;
+    for (let score of scores) {
+      if (newScore.player1 > score.player1) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  addNewBestScore(scores, newScore) {
+    scores.push(newScore);
+    scores.sort((a, b) => a.p1 > b.p1);
+    scores.splice(10);
   }
 }
 

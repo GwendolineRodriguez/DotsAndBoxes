@@ -205,7 +205,7 @@ class Options extends HTMLElement {
           class="${actionBtn} ${optElem}"
           href="/scores"
           aria-label="Scores"
-          >Scores</a
+          >Best Scores</a
         >
       </section>
     `;
