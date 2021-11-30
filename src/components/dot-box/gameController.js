@@ -12,7 +12,7 @@ class GameController {
     const boxes = this.gridController.getAdjacentBoxes(sideId);
     let boxesCompleted = 0;
     boxes.forEach((box) => {
-      box.sideIds[sideId] = this.name;
+      box.sideIds[sideId] = player.name;
       let isCurrentBoxCompleted = this.gridController.boxIsCompleted(box);
       if (isCurrentBoxCompleted) {
         boxesCompleted++;
@@ -34,7 +34,11 @@ class GameController {
       (!player.isHuman && boxesCompleted && !this.gameState.gameOver)
     ) {
       let bestNextSideId = this.gameAI.chooseSideId();
-      this.chooseBoxSide(this.gameState.player2, bestNextSideId);
+      if (bestNextSideId) {
+        console.log(this.gridController.availableSides);
+        console.log(this.gameState);
+        this.chooseBoxSide(this.gameState.player2, bestNextSideId);
+      }
     }
   }
 }

@@ -22,8 +22,12 @@ class DotsAndBoxes extends HTMLElement {
       options.boxNumber,
       this.grid.classes
     );
-    const gameAI = this.setUpAI(options.difficulty, gridController);
     this.gameState = new GameState(gridController, options, this.grid.classes);
+    const gameAI = this.setUpAI(
+      options.difficulty,
+      gridController,
+      this.gameState
+    );
     this.gameController = new GameController(
       gridController,
       this.gameState,
@@ -41,14 +45,14 @@ class DotsAndBoxes extends HTMLElement {
     return { playerName, board, boxNumber, difficulty };
   }
 
-  setUpAI(difficulty, gridController) {
+  setUpAI(difficulty, gridController, gameState) {
     switch (difficulty) {
       case "easy":
         return new EasyGameAI(gridController);
       case "medium":
         return new MediumGameAI(gridController);
       case "difficult":
-        return new DifficultGameAI(gridController);
+        return new DifficultGameAI(gridController, gameState);
       default:
         return new EasyGameAI(gridController);
     }

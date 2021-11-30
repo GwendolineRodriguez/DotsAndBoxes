@@ -1,45 +1,104 @@
 import GameAI from "./gameAI";
+import cloneDeep from "lodash.clonedeep";
+import GameStateSim from "./gameStateSim";
 
 class DifficultGameAI extends GameAI {
-  constructor(gridController) {
+  constructor(gridController, gameState) {
     super(gridController);
+    this.gameState = gameState;
   }
 
   chooseSideId() {
-    return this.getMiniMaxSideId(this.getAvailableSides(), 2, true);
+    const gameStateSim = new GameStateSim(this.gridController, this.gameState);
+    gameStateSim.setActivePlayer(gameStateSim.player2);
+    const bestSideIdperScore = this.getMiniMaxSideId(gameStateSim, 1, true);
+    return bestSideIdperScore.sideId;
   }
 
-  evaluateScore(availableSides) {
-    // what is score of player 1 plays the missing sideId ?
+  scoreEvaluation(state) {
+    const scoreEval = state.player2.score - state.player1.score;
+    const sideId = state.chosenSideId;
+    return { scoreEval, sideId };
   }
 
-  getMiniMaxSideId(gameState, depth, maximizingPlayer) {
-    if (depth === 0 || gameState.availableSides.length === 0) {
-      // rerurn {aiscore: 3, sideId: r1c1}
-      return this.evaluateScore(gameState);
-    }
-
-    if (maximizingPlayer) {
-      let maxEval = -Infinity;
-      for (let side of availableSides) {
-        // gameState
-        // with availablesSides
-        // this.boxes
-        // update owner in boxes to be able to avaluate scores
-        availableSides.remove(side);
-        let newEval = this.getMiniMaxSideId(availableSides, depth - 1, false);
-        maxEval = Math.max(maxEval, newEval);
+  simulateChosenSide(gameState, sideId) {
+    gameState.chosenSideId = sideId;
+    const boxes = gameState.getAdjacentBoxes(sideId);
+    let boxesCompleted = 0;
+    boxes.forEach((box) => {
+      box.sideIds[sideId] = gameState.activePlayer.name;
+      gameState.removeSideIdAvailability(sideId);
+      let isCurrentBoxCompleted = this.gridController.boxIsCompleted(box);
+      if (isCurrentBoxCompleted) {
+        boxesCompleted++;
       }
-      return maxEval;
+      if (isCurrentBoxCompleted) {
+        gameState.activePlayer.score++;
+        gameState.boxesOwned++;
+        box.owner = gameState.activePlayer.name;
+        gameState.checkEndGame();
+      }
+    });
+    if (boxesCompleted && !gameState.gameOver) {
+      gameState.nextTurnPlayer = gameState.activePlayer;
     } else {
-      let minEval = +Infinity;
-      for (let side of availableSides) {
-        availableSides.remove(side);
-        let newEval = this.getMiniMaxSideId(availableSides, depth - 1, true);
-        minEval = Math.min(maxEval, newEval);
-      }
-      return minEval;
+      gameState.nextTurnPlayer = gameState.inActivePlayer;
     }
+  }
+
+  getMinScore(minScore, score) {
+    if (minScore.scoreEval > score.scoreEval) {
+      return score;
+    }
+    return minScore;
+  }
+
+  getMaxScore(maxScore, score) {
+    if (maxScore.scoreEval < score.scoreEval) {
+      return score;
+    }
+    return maxScore;
+  }
+
+  // getMiniMaxSideId(gameState, depth, maximizingPlayer) {
+  //   if (depth === 0 || gameState.availableSides.length === 0) {
+  //     return this.scoreEvaluation(gameState);
+  //   }
+
+  //   if (maximizingPlayer) {
+  //     let maxScore = { scoreEval: -Infinity, sideId: "" };
+  //     for (let sideId of gameState.availableSides) {
+  //       let gameStatedeepCopy = cloneDeep(gameState);
+  //       this.simulateChosenSide(gameStatedeepCopy, sideId);
+  //       let score = this.getMiniMaxSideId(gameStatedeepCopy, depth - 1, false);
+  //       maxScore = this.getMaxScore(maxScore, score);
+  //     }
+  //     return maxScore;
+  //   } else {
+  //     let minScore = { scoreEval: +Infinity, sideId: "" };
+  //     for (let sideId of gameState.availableSides) {
+  //       let gameStatedeepCopy = cloneDeep(gameState);
+  //       this.simulateChosenSide(gameStatedeepCopy, sideId);
+  //       let score = this.getMiniMaxSideId(gameStatedeepCopy, depth - 1, true);
+  //       minScore = this.getMinScore(minScore, score);
+  //     }
+  //     return minScore;
+  //   }
+  // }
+
+  getMiniMaxSideId(gameState, depth) {
+    if (depth === 0 || gameState.availableSides.length === 0) {
+      return this.scoreEvaluation(gameState);
+    }
+
+    let maxScore = { scoreEval: -Infinity, sideId: "" };
+    for (let sideId of gameState.availableSides) {
+      let gameStatedeepCopy = cloneDeep(gameState);
+      this.simulateChosenSide(gameStatedeepCopy, sideId);
+      let score = this.getMiniMaxSideId(gameStatedeepCopy, depth - 1, false);
+      maxScore = this.getMaxScore(maxScore, score);
+    }
+    return maxScore;
   }
 }
 

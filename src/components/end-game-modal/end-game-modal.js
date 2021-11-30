@@ -35,7 +35,7 @@ class EndGameModal extends HTMLElement {
     });
   }
 
-  render = () => {
+  render() {
     const html = String.raw;
     this.innerHTML = html`
       <div
@@ -66,9 +66,9 @@ class EndGameModal extends HTMLElement {
       </div>
       <div class="${overlay} ${hidden}" aria-hidden="true"></div>
     `;
-  };
+  }
 
-  open = (state) => {
+  open(state) {
     const html = String.raw;
     const player1 = state.player1;
     const player2 = state.player2;
@@ -81,22 +81,22 @@ class EndGameModal extends HTMLElement {
     this.overlay.classList.remove(`${hidden}`);
     this.overlay.removeAttribute("aria-hidden");
     this.homeBtn.focus();
-  };
+  }
 
-  close = () => {
+  close() {
     this.modal.classList.add(`${hidden}`);
     this.overlay.classList.add(`${hidden}`);
     this.modal.setAttribute("aria-hidden", "true");
     this.overlay.setAttribute("aria-hidden", "true");
-  };
+  }
 
-  setBtnEventListeners = (state) => {
+  setBtnEventListeners(state) {
     this.homeBtn.addEventListener("click", this.close);
     this.replayBtn.addEventListener("click", (e) => {
       this.close();
       state.resetGame();
     });
-  };
+  }
 }
 
 customElements.define("end-game-modal", EndGameModal);
