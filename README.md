@@ -24,8 +24,6 @@ A SPA Dots & Boxes game written in vanilla javascript, accessible, with homemade
 
 - draw not possible
 
-- dark mode input color
-
 - mobile disabled input styles
 
 - limit scores to ten bests
