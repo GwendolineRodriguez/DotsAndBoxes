@@ -12,12 +12,12 @@ class GameStateSim {
   }
 
   setActivePlayer(player) {
-    if (player.isHuman) {
-      this.activePlayer = this.player1;
-      this.inActivePlayer = this.player2;
-    } else {
+    if (player === this.player2) {
       this.activePlayer = this.player2;
       this.inActivePlayer = this.player1;
+    } else {
+      this.activePlayer = this.player1;
+      this.inActivePlayer = this.player2;
     }
   }
 

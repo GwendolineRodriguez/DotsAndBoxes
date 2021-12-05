@@ -34,11 +34,7 @@ class GameController {
       (!player.isHuman && boxesCompleted && !this.gameState.gameOver)
     ) {
       let bestNextSideId = this.gameAI.chooseSideId();
-      if (bestNextSideId) {
-        console.log(this.gridController.availableSides);
-        console.log(this.gameState);
-        this.chooseBoxSide(this.gameState.player2, bestNextSideId);
-      }
+      this.chooseBoxSide(this.gameState.player2, bestNextSideId);
     }
   }
 }

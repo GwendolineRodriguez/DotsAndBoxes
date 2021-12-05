@@ -6,22 +6,21 @@ class DifficultGameAI extends GameAI {
   constructor(gridController, gameState) {
     super(gridController);
     this.gameState = gameState;
+    this.maxDepth = 3;
   }
 
   chooseSideId() {
     const gameStateSim = new GameStateSim(this.gridController, this.gameState);
     gameStateSim.setActivePlayer(gameStateSim.player2);
-    const bestSideIdperScore = this.getMiniMaxSideId(gameStateSim, 1, true);
-    return bestSideIdperScore.sideId;
+    const bestSideIdperScore = this.getMiniMaxSideId(
+      gameStateSim,
+      this.maxDepth
+    );
+    return bestSideIdperScore;
   }
 
-  scoreEvaluation(state) {
-    const scoreEval = state.player2.score - state.player1.score;
-    const sideId = state.chosenSideId;
-    return { scoreEval, sideId };
-  }
-
-  simulateChosenSide(gameState, sideId) {
+  simulateChosenSide(gameStateOrigin, sideId) {
+    let gameState = cloneDeep(gameStateOrigin);
     gameState.chosenSideId = sideId;
     const boxes = gameState.getAdjacentBoxes(sideId);
     let boxesCompleted = 0;
@@ -39,66 +38,43 @@ class DifficultGameAI extends GameAI {
         gameState.checkEndGame();
       }
     });
-    if (boxesCompleted && !gameState.gameOver) {
-      gameState.nextTurnPlayer = gameState.activePlayer;
-    } else {
-      gameState.nextTurnPlayer = gameState.inActivePlayer;
+    if (boxesCompleted === 0 && !gameState.gameOver) {
+      gameState.setActivePlayer(gameState.inActivePlayer);
     }
+    return gameState;
   }
 
-  getMinScore(minScore, score) {
-    if (minScore.scoreEval > score.scoreEval) {
-      return score;
-    }
-    return minScore;
-  }
+  getMinScore = (minScore, score) => (minScore > score ? score : minScore);
 
-  getMaxScore(maxScore, score) {
-    if (maxScore.scoreEval < score.scoreEval) {
-      return score;
-    }
-    return maxScore;
-  }
-
-  // getMiniMaxSideId(gameState, depth, maximizingPlayer) {
-  //   if (depth === 0 || gameState.availableSides.length === 0) {
-  //     return this.scoreEvaluation(gameState);
-  //   }
-
-  //   if (maximizingPlayer) {
-  //     let maxScore = { scoreEval: -Infinity, sideId: "" };
-  //     for (let sideId of gameState.availableSides) {
-  //       let gameStatedeepCopy = cloneDeep(gameState);
-  //       this.simulateChosenSide(gameStatedeepCopy, sideId);
-  //       let score = this.getMiniMaxSideId(gameStatedeepCopy, depth - 1, false);
-  //       maxScore = this.getMaxScore(maxScore, score);
-  //     }
-  //     return maxScore;
-  //   } else {
-  //     let minScore = { scoreEval: +Infinity, sideId: "" };
-  //     for (let sideId of gameState.availableSides) {
-  //       let gameStatedeepCopy = cloneDeep(gameState);
-  //       this.simulateChosenSide(gameStatedeepCopy, sideId);
-  //       let score = this.getMiniMaxSideId(gameStatedeepCopy, depth - 1, true);
-  //       minScore = this.getMinScore(minScore, score);
-  //     }
-  //     return minScore;
-  //   }
-  // }
+  getMaxScore = (maxScore, score) => (maxScore < score ? score : maxScore);
 
   getMiniMaxSideId(gameState, depth) {
     if (depth === 0 || gameState.availableSides.length === 0) {
-      return this.scoreEvaluation(gameState);
+      return state.player2.score - state.player1.score;
     }
 
-    let maxScore = { scoreEval: -Infinity, sideId: "" };
-    for (let sideId of gameState.availableSides) {
-      let gameStatedeepCopy = cloneDeep(gameState);
-      this.simulateChosenSide(gameStatedeepCopy, sideId);
-      let score = this.getMiniMaxSideId(gameStatedeepCopy, depth - 1, false);
-      maxScore = this.getMaxScore(maxScore, score);
+    if (gameState.player2 === gameState.activePlayer) {
+      let maxScore = -Infinity;
+      let chooseSideId = "";
+      for (let sideId of gameState.availableSides) {
+        let newGameState = this.simulateChosenSide(gameState, sideId);
+        let score = this.getMiniMaxSideId(newGameState, depth - 1);
+        if (score > maxScore) {
+          chooseSideId = sideId;
+          maxScore = this.getMaxScore(maxScore, score);
+        }
+      }
+      if (depth === this.maxDepth) return chooseSideId;
+      return maxScore;
+    } else {
+      let minScore = Infinity;
+      for (let sideId of gameState.availableSides) {
+        let newGameState = this.simulateChosenSide(gameState, sideId);
+        let score = this.getMiniMaxSideId(newGameState, depth - 1);
+        minScore = this.getMinScore(minScore, score);
+      }
+      return minScore;
     }
-    return maxScore;
   }
 }
 
