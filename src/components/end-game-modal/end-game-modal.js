@@ -26,7 +26,6 @@ class EndGameModal extends HTMLElement {
     this.playerScore2 = document.getElementById("playerScore2");
     this.homeBtn = document.getElementById("homeBtn");
     this.replayBtn = document.getElementById("replayBtn");
-    this.btnCloseModal.addEventListener("click", this.close);
     this.overlay.addEventListener("click", this.close);
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && !this.modal.classList.contains(`${hidden}`)) {
@@ -99,7 +98,8 @@ class EndGameModal extends HTMLElement {
   }
 
   setBtnEventListeners(state) {
-    this.homeBtn.addEventListener("click", this.close);
+    this.btnCloseModal.addEventListener("click", () => this.close());
+    this.homeBtn.addEventListener("click", () => this.close());
     this.replayBtn.addEventListener("click", (e) => {
       this.close();
       state.resetGame();

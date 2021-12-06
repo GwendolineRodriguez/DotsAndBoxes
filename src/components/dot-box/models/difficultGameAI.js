@@ -50,7 +50,7 @@ class DifficultGameAI extends GameAI {
 
   getMiniMaxSideId(gameState, depth) {
     if (depth === 0 || gameState.availableSides.length === 0) {
-      return state.player2.score - state.player1.score;
+      return gameState.player2.score - gameState.player1.score;
     }
 
     if (gameState.player2 === gameState.activePlayer) {
