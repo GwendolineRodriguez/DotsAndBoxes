@@ -16,12 +16,15 @@ class Router {
       this.routes.push(route);
     });
     this.navigate("/");
+    window.onpopstate = () => {
+      this.navigate(location.pathname);
+    };
   }
 
   navigate(path) {
     const route = this.routes.find((route) => route.path == path);
+    history.pushState({}, route.path, location.origin + route.path);
     this.outlet.innerHTML = route.component;
-    history.replaceState({}, "", route.path);
     setTimeout(() => {
       this.updateLinks();
     }, 1000);
@@ -43,7 +46,7 @@ class Router {
         console.log(`%c ${path}`, "color:yellow;");
         this.navigate(path);
       };
-      link.addEventListener("click", handler);
+      link.addEventListener("pointerup", handler);
     });
   }
 }

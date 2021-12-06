@@ -196,10 +196,13 @@ class Options extends HTMLElement {
         >
           <img class="icon" src="${arrowForwardIcon}" alt="arrowForwardIcon" />
         </button>
-        <button id="playBtn" class="${actionBtn} ${optElem}">
-          Play
-          <a href="/game" aria-label="Play"></a>
-        </button>
+        <a
+          id="playBtn"
+          href="/game"
+          aria-label="Play"
+          class="${actionBtn} ${optElem}"
+          >Play</a
+        >
         <a
           id="scoreBtn"
           class="${actionBtn} ${optElem}"
