@@ -46,7 +46,7 @@ class Router {
         console.log(`%c ${path}`, "color:yellow;");
         this.navigate(path);
       };
-      link.addEventListener("pointerup", handler);
+      link.addEventListener("click", handler);
     });
   }
 }

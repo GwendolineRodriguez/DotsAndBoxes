@@ -18,8 +18,9 @@ class Options extends HTMLElement {
     this.optionsBoard = {
       "3x3": 9,
       "4x4": 16,
-      "5x5": 25,
-      "6x6": 36,
+      // TODO: To put back when alpha beta pruning
+      // "5x5": 25,
+      // "6x6": 36,
     };
     this.diffLevels = ["easy", "medium", "difficult"];
   }
@@ -54,7 +55,7 @@ class Options extends HTMLElement {
     if (this.options.boxNumber == 9) {
       this.boardBackBtn.style.display = "none";
     }
-    if (this.options.boxNumber == 36) {
+    if (this.options.boxNumber == 16) {
       this.boardForwardBtn.style.display = "none";
     }
   }
@@ -111,8 +112,11 @@ class Options extends HTMLElement {
 
   setPlayBtnEvent() {
     this.playBtn = document.getElementById("playBtn");
-    const gameLink = this.playBtn.children[0];
-    this.playBtn.addEventListener("click", () => {
+    const playBtnLink = document.getElementById("playBtnLink");
+
+    this.playBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       const name = document.getElementById("name").value;
       const board = document.getElementById("board").value;
       if (name && name != "") {
@@ -126,7 +130,7 @@ class Options extends HTMLElement {
       );
       // dispatch event to anchor /game so that
       // router gets triggered after getting options
-      gameLink.dispatchEvent(new Event("click"));
+      playBtnLink.dispatchEvent(new Event("click"));
     });
   }
 
@@ -151,6 +155,7 @@ class Options extends HTMLElement {
         <!-- Board -->
         <button
           id="boardBackBtn"
+          type="button"
           class="${modularBtn} ${arrowBack}"
           data-target="board"
         >
@@ -167,6 +172,7 @@ class Options extends HTMLElement {
         </label>
         <button
           id="boardForwardBtn"
+          type="button"
           class="${modularBtn} ${arrowForward}"
           data-target="board"
         >
@@ -175,6 +181,7 @@ class Options extends HTMLElement {
         <!-- Difficulty -->
         <button
           id="diffBackBtn"
+          type="button"
           class="${modularBtn} ${arrowBack}"
           data-target="difficulty"
         >
@@ -191,18 +198,23 @@ class Options extends HTMLElement {
         </label>
         <button
           id="diffForwardBtn"
+          type="button"
           class="${modularBtn} ${arrowForward}"
           data-target="difficulty"
         >
           <img class="icon" src="${arrowForwardIcon}" alt="arrowForwardIcon" />
         </button>
-        <a
+        <button id="playBtn" type="button" class="${actionBtn} ${optElem}">
+          Play
+          <a id="playBtnLink" href="/game" aria-label="Play"></a>
+        </button>
+        <!-- <a
           id="playBtn"
           href="/game"
           aria-label="Play"
           class="${actionBtn} ${optElem}"
           >Play</a
-        >
+        > -->
         <a
           id="scoreBtn"
           class="${actionBtn} ${optElem}"
