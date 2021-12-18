@@ -1,6 +1,6 @@
 # Dots And Boxes
 
-A SPA Dots & Boxes game written in vanilla javascript, accessible, with homemade routing, use Service Worker to set it up as a PWA, use a heuristic algorithm for AI and CSP for security. Project made to learn the fundamentals of JS, Routing, PWA, Security, Accessibility, and Game AI.
+A SPA Dots & Boxes game written in vanilla javascript, accessible, with homemade routing, use minimax algorithm for AI and CSP for security. Project made to learn the fundamentals of JS, Routing, CSP, Accessibility, and Game AI.
 
 <https://dots-boxes.netlify.app/>
 
@@ -10,16 +10,20 @@ A SPA Dots & Boxes game written in vanilla javascript, accessible, with homemade
 
 - Homemade Routing : use of History Browser API.
 
+- Accessibility : light/dark mode, Contrast checked, game playable through Keyboard.
+
+- Board Size from 3x3 to 4x4.
+
+- AI made with Minimax algorithm.
+
+## Roadmap and Bugs to fix
+
+- Service worker not working.
+
+- Add CSP for Security and check LightHouse Score.
+
 - PWA : Caching through Service Worker for offline access.
 
-- CSP for Security, and LightHouse Score of 100.
+- Routing : bug on mobile browser, and refresh always leads to home.
 
-- Accessibility : light/dark mode, Contrast checked, game playable through Keyboard, LightHouse Score of 90.
-
-- Board Size from 3x3 to 6x6.
-
-- AI made with Minimax algorithm and Alpha Pruning Heuristic method.
-
-## Bugs to fix
-
-- service worker not working
+- Many ways to improve AI, but Alpha Pruning Heuristic method to add first.
