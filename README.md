@@ -24,6 +24,10 @@ A SPA Dots & Boxes game written in vanilla javascript, accessible, with homemade
 
 - PWA : Caching through Service Worker for offline access.
 
-- Routing : bug on mobile browser, and refresh always leads to home.
+- Routing : bug on mobile browser, and refresh always leads to home. Add navigation API.
 
 - Many ways to improve AI, but Alpha Pruning Heuristic method to add first.
+
+- Add Page Transition API
+
+- Put AI in a web worker
